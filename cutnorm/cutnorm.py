@@ -1,7 +1,7 @@
 import time
 import math
 import numpy as np
-import OptManiMulitBallGBB
+from .OptManiMulitBallGBB import opt_mani_mulit_ball_gbb, cutnorm_quad
 
 
 def cutnorm_round(U: np.ndarray,
@@ -330,9 +330,9 @@ def _compute_cutnorm(C: np.ndarray,
     x0 = np.divide(x0, np.sqrt(nrmx0))
 
     tic_sdp = time.time()
-    x, g, out = OptManiMulitBallGBB.opt_mani_mulit_ball_gbb(
+    x, g, out = opt_mani_mulit_ball_gbb(
         x0,
-        OptManiMulitBallGBB.cutnorm_quad,
+        cutnorm_quad,
         C,
         record=0,
         mxitr=600,
