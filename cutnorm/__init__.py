@@ -1,1 +1,1 @@
-from cutnorm import cutnorm
+from .cutnorm import cutnorm
