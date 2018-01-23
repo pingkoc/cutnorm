@@ -114,13 +114,14 @@ def cutnorm_sets(uis: np.ndarray, vjs: np.ndarray) -> (np.ndarray, np.ndarray):
     return S, T
 
 
-def cutnorm(A: np.ndarray,
-            B: np.ndarray,
-            w1=None,
-            w2=None,
-            max_round_iter=100,
-            logn_lowrank=False,
-            debug=False):
+def cutnorm(
+        A: np.ndarray,
+        B: np.ndarray,
+        w1=None,
+        w2=None,
+        max_round_iter=100,
+        logn_lowrank=False,
+        debug=False) -> (np.float_, np.float_, np.ndarray, np.ndarray, dict):
     """
     Computes the cutnorm of the differences between the two matrices
 
@@ -133,21 +134,26 @@ def cutnorm(A: np.ndarray,
         logn_lowrank: boolean to toggle log2(n) low rank approximation
         debug: boolean, generate debug information
     Returns:
-        (perf, perf2, S, T, w)
-        perf: results from OptManiMulitBallGBB
-            [n, p, objf, tsolve, itr, nfe, feasi, nrmG]
-            n: dimension of matrix
-            p: rank
-            objf: objective function value
-            tsolve: computation time
-            itr, nfe, feasi, nrmG: information from OptManiMulitBallGBB
-        perf2: results from gaussian rounding
-            [objf_lower, tsolve]
-            objf_lower: objective function value from gaussian rounding
-            tsolve: computation time
+        (objf_lower, objf_upper, S, T, debug_info)
+        objf_lower: objective function value from gaussian rounding
+        objf_upper: objective function value from sdp solution
         S: Cutnorm set axis = 0
         T: Cutnorm set axis = 1
-        w: weight vector
+        debug_info: dictionary containing debug information
+            Debug information from OptManiMulitBallGBB:
+                sdp_augm_n: dimension of augmented matrix
+                sdp_relax_rank_p: rank
+                sdp_tsolve: computation time
+                sdp_itr, sdp_nfe, sdp_feasi, sdp_nrmG: information from OptManiMulitBallGBB
+            Debug information from gaussian rounding:
+                round_tsolve: computation time for rounding
+                round_approx_list: list of rounded objf values
+                round_uis_list: list of uis
+                round_vjs_list: list of vjs
+                round_uis_opt: optimum uis
+                round_vjs_opt: optimum vjs
+            Debug information from processing the difference:
+                weight_of_C: weight vector of C, the difference matrix
     Raises:
         ValueError: if A and B are of wrong dimension, or if weight vectors
             does not match the corresponding A and B matrices
@@ -174,10 +180,13 @@ def cutnorm(A: np.ndarray,
         else:
             w, C = _compute_C_uneqdim_unweighted(A, B)
 
-    objf_lower, S, T, debug_info = _compute_cutnorm(C, max_round_iter,
-                                                    logn_lowrank, debug)
+    objf_lower, objf_upper, S, T, debug_info = _compute_cutnorm(
+        C, max_round_iter, logn_lowrank, debug)
 
-    return objf_lower, S, T, w, debug_info
+    # Add weight vector into debug info
+    debug_info['weight_of_C'] = w
+
+    return objf_lower, objf_upper, S, T, debug_info
 
 
 def _compute_C_weighted(A: np.ndarray, B: np.ndarray, w1: np.ndarray,
@@ -280,7 +289,8 @@ def _compute_C_uneqdim_unweighted(A: np.ndarray,
 def _compute_cutnorm(C: np.ndarray,
                      max_round_iter: int,
                      logn_lowrank=False,
-                     debug=False) -> (np.float_, np.ndarray, np.ndarray, dict):
+                     debug=False
+                     ) -> (np.float_, np.float_, np.ndarray, np.ndarray, dict):
     """
     Computes the cutnorm of square matrix C
 
@@ -290,15 +300,15 @@ def _compute_cutnorm(C: np.ndarray,
         logn_lowrank: boolean to toggle log2(n) low rank approximation
         debug: boolean, debug information generation
     Returns:
-        (objf_lower, S, T, debug_info)
+        (objf_lower, objf_upper, S, T, debug_info)
         objf_lower: objective function value from gaussian rounding
+        objf_upper: objective function value from sdp solution
         S: Cutnorm set axis = 0
         T: Cutnorm set axis = 1
         debug_info: dictionary containing debug information
             Debug information from OptManiMulitBallGBB:
                 sdp_augm_n: dimension of augmented matrix
                 sdp_relax_rank_p: rank
-                sdp_objf: objective function value from sdp
                 sdp_tsolve: computation time
                 sdp_itr, sdp_nfe, sdp_feasi, sdp_nrmG: information from OptManiMulitBallGBB
             Debug information from gaussian rounding:
@@ -346,7 +356,7 @@ def _compute_cutnorm(C: np.ndarray,
     # SDP upper bound approximation
     U = x[:, :n2 // 2]
     V = x[:, n2 // 2:]
-    objf_sdp = np.abs(np.sum(C * (U.T @ V))) / 4.0
+    objf_upper = np.abs(np.sum(C * (U.T @ V))) / 4.0
 
     # Gaussian Rounding
     tic_round = time.time()
@@ -363,7 +373,6 @@ def _compute_cutnorm(C: np.ndarray,
         debug_info = {
             "sdp_augm_n": n2,
             "sdp_relax_rank_p": p,
-            "sdp_objf": objf_sdp,
             "sdp_tsolve": tsolve_sdp,
             "sdp_itr": out['itr'],
             "sdp_nfe": out['nfe'],
@@ -374,4 +383,4 @@ def _compute_cutnorm(C: np.ndarray,
         # Join rounding debug info
         debug_info.update(round_debug_info)
 
-    return objf_lower, S, T, debug_info
+    return objf_lower, objf_upper, S, T, debug_info
