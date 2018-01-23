@@ -118,7 +118,7 @@ def cutnorm(A: np.ndarray,
             B: np.ndarray,
             w1=None,
             w2=None,
-            max_round_iter=1000,
+            max_round_iter=100,
             logn_lowrank=False,
             debug=False):
     """
