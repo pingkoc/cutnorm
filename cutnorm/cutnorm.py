@@ -23,9 +23,9 @@ def cutnorm(A: np.ndarray,
         logn_lowrank: boolean to toggle log2(n) low rank approximation
         extra_info: boolean, generate extra computational information
     Returns:
-        (cutnorm_lower, cutnorm_upper, info)
-        cutnorm_lower: objective function value from gaussian rounding
-        cutnorm_upper: objective function value from sdp solution
+        (cutnorm_round, cutnorm_sdp, info)
+        cutnorm_round: objective function value from gaussian rounding
+        cutnorm_sdp: objective function value from sdp solution
         S: Cutnorm set axis = 0
         T: Cutnorm set axis = 1
         info: dictionary containing computational information
@@ -69,16 +69,16 @@ def cutnorm(A: np.ndarray,
         else:
             w, C = _compute_C_uneqdim_unweighted(A, B)
 
-    cutnorm_lower, cutnorm_upper, info = _compute_cutnorm(
+    cutnorm_round, cutnorm_sdp, info = _compute_cutnorm(
         C, max_round_iter, logn_lowrank, extra_info)
 
     # Add weight vector into extra_info info
     info['weight_of_C'] = w
 
-    return cutnorm_lower, cutnorm_upper, info
+    return cutnorm_round, cutnorm_sdp, info
 
 
-def cutnorm_round(
+def gaussian_round(
         U: np.ndarray,
         V: np.ndarray,
         C: np.ndarray,
@@ -128,9 +128,8 @@ def cutnorm_round(
         low_rank = int(np.log2(n))
 
     for i in range(max_round_iter):
-        g = G[i]
-        uis = np.sign(g @ U)
-        vjs = np.sign(g @ V)
+        uis = np.sign(G[i] @ U)
+        vjs = np.sign(G[i] @ V)
 
         # Rounding
         if logn_lowrank:
@@ -202,9 +201,9 @@ def _compute_cutnorm(C: np.ndarray,
         logn_lowrank: boolean to toggle log2(n) low rank approximation
         extra_info: boolean, extra computational information generation
     Returns:
-        (cutnorm_lower, cutnorm_upper, info)
-        cutnorm_lower: objective function value from gaussian rounding
-        cutnorm_upper: objective function value from sdp solution
+        (cutnorm_round, cutnorm_sdp, info)
+        cutnorm_round: objective function value from gaussian rounding
+        cutnorm_sdp: objective function value from sdp solution
         S: Cutnorm set axis = 0
         T: Cutnorm set axis = 1
         info: dictionary containing computational information
@@ -258,11 +257,11 @@ def _compute_cutnorm(C: np.ndarray,
     # SDP upper bound approximation
     U = x[:, :n2 // 2]
     V = x[:, n2 // 2:]
-    cutnorm_upper = np.abs(np.sum(C * (U.T @ V))) / 4.0
+    cutnorm_sdp = np.abs(np.sum(C * (U.T @ V))) / 4.0
 
     # Gaussian Rounding
     tic_round = time.time()
-    (cutnorm_lower, uis, vjs, round_info) = cutnorm_round(
+    (cutnorm_round, uis, vjs, round_info) = gaussian_round(
         U, V, C, max_round_iter, logn_lowrank, extra_info)
     toc_round = time.time()
     tsolve_round = toc_round - tic_round
@@ -287,7 +286,7 @@ def _compute_cutnorm(C: np.ndarray,
         # Join rounding info
         info.update(round_info)
 
-    return cutnorm_lower, cutnorm_upper, info
+    return cutnorm_round, cutnorm_sdp, info
 
 
 def _compute_C_weighted(A: np.ndarray, B: np.ndarray, w1: np.ndarray,
