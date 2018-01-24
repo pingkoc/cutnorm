@@ -1,11 +1,14 @@
-=============================================================================================
- Cutnorm Approximation via Gaussian Rounding and Optimization with Orthogonality Constraints
-=============================================================================================
+=======
+Cutnorm
+=======
+
+Approximation via Gaussian Rounding and Optimization with Orthogonality Constraints
+-----------------------------------------------------------------------------------
 
 This package computes the approximations to the cutnorm using some of the techniques detailed by Alon and Noar [ALON2004]_ and a fast optimization algorithm by Wen and Yin [WEN2013]_.
 
-Example Usage:
---------------
+Example Usage
+-------------
 
 Below is an example of using the cutnorm package and tools. Given two graphs A and B, we wish to compute a norm for the difference matrix (A - B) between the two graphs. An obvious example to represent the advantage of using a cutnorm over l1 norm is to consider A and B as `Erdos-Renyi random graphs`_. Under a fixed vertex set, an Erdos-Renyi random graph is one where a fixed probability determines the presence of an edge.
 
