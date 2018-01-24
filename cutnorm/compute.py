@@ -4,13 +4,13 @@ import numpy as np
 from .OptManiMulitBallGBB import opt_mani_mulit_ball_gbb, cutnorm_quad
 
 
-def cutnorm(A: np.ndarray,
-            B: np.ndarray,
-            w1=None,
-            w2=None,
-            max_round_iter=100,
-            logn_lowrank=False,
-            extra_info=False) -> (np.float_, np.float_, dict):
+def compute_cutnorm(A: np.ndarray,
+                    B: np.ndarray,
+                    w1=None,
+                    w2=None,
+                    max_round_iter=100,
+                    logn_lowrank=False,
+                    extra_info=False) -> (np.float_, np.float_, dict):
     """
     Computes the cutnorm of the differences between the two matrices
 
@@ -24,10 +24,15 @@ def cutnorm(A: np.ndarray,
         extra_info: boolean, generate extra computational information
     Returns:
         (cutnorm_round, cutnorm_sdp, info)
+
         cutnorm_round: objective function value from gaussian rounding
+
         cutnorm_sdp: objective function value from sdp solution
+
         S: Cutnorm set axis = 0
+
         T: Cutnorm set axis = 1
+
         info: dictionary containing computational information
             Computational information from OptManiMulitBallGBB:
                 sdp_augm_n: dimension of augmented matrix
@@ -104,9 +109,13 @@ def gaussian_round(
         extra_info: boolean, generate extra computational information
     Returns:
         (approx_opt, uis_opt, vjs_opt, round_info)
+
         approx_opt: approximated objective function value
+
         uis_opt: rounded u vector
+
         vis_opt: rounded v vector
+
         round_info: information for rounding operation
     '''
     (p, n) = U.shape
@@ -175,9 +184,10 @@ def cutnorm_sets(uis: np.ndarray, vjs: np.ndarray) -> (np.ndarray, np.ndarray):
         uis: ndarray, (n+1, ) shaped array of rounded +- 1 solution
         vis: ndarray, (n+1, ) shaped array of rounded +- 1 solution
     Returns:
-        Reconstructed S and T sets that are {1, 0}^n
-        (S, T)
+        (S, T) Reconstructed S and T sets that are {1, 0}^n
+
         S: Cutnorm set axis = 0
+
         T: Cutnorm set axis = 1
     """
     S = -1 * uis[-1] * uis[:-1]
@@ -202,10 +212,15 @@ def _compute_cutnorm(C: np.ndarray,
         extra_info: boolean, extra computational information generation
     Returns:
         (cutnorm_round, cutnorm_sdp, info)
+
         cutnorm_round: objective function value from gaussian rounding
+
         cutnorm_sdp: objective function value from sdp solution
+
         S: Cutnorm set axis = 0
+
         T: Cutnorm set axis = 1
+
         info: dictionary containing computational information
             Computational information from OptManiMulitBallGBB:
                 sdp_augm_n: dimension of augmented matrix

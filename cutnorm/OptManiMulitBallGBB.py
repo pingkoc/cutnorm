@@ -36,8 +36,11 @@ def opt_mani_mulit_ball_gbb(x: np.ndarray,
             ftol        stop control for abs(F_k - F_{k-1})/(1+|F_{k-1}|) usually, max{xtol, gtol} > ftol
     Returns:
         (x, g, out)
+
         x: solution
+
         g: gradient of x
+
         Out: output information
 
     """
@@ -174,7 +177,9 @@ def maxcut_quad(V: np.ndarray, C: np.ndarray) -> (np.float_, np.ndarray):
 
     Returns:
         (f, g)
+
         f: float, objective funciton value
+
         g: ndarray, gradient
     """
     # Only taking first arg
@@ -193,7 +198,9 @@ def cutnorm_quad(V: np.ndarray, C: np.ndarray) -> (np.float_, np.ndarray):
 
     Returns:
         (f, g)
+
         f: float, objective funciton value
+
         g: ndarray, gradient
     """
     n = len(C[0])
