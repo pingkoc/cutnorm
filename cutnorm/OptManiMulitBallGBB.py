@@ -26,7 +26,7 @@ def opt_mani_mulit_ball_gbb(x: np.ndarray,
         fun: Function that returns the objective function value
             and its gradient.
             Params: [x, args]
-            Returns: [
+            Returns: [f, g]
         args: args to be used in fun
         kwargs: Options
             record = 0, no print out
