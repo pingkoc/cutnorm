@@ -33,8 +33,7 @@ def opt_mani_mulit_ball_gbb(x: np.ndarray,
             mxitr       max number of iterations
             xtol        stop control for ||X_k - X_{k-1}||
             gtol        stop control for the projected gradient
-            ftol        stop control for |F_k - F_{k-1}|/(1+|F_{k-1}|)
-                        usually, max{xtol, gtol} > ftol
+            ftol        stop control for abs(F_k - F_{k-1})/(1+|F_{k-1}|) usually, max{xtol, gtol} > ftol
     Returns:
         (x, g, out)
         x: solution
@@ -170,7 +169,7 @@ def maxcut_quad(V: np.ndarray, C: np.ndarray) -> (np.float_, np.ndarray):
     max Tr(C*X), s.t., X_ii = 1, X psd
 
     Args:
-        V: ndarray, Low rank model X = V'*V;
+        V: ndarray, Low rank model X = V' * V;
         C: ndarray, Objective matrix to compute maxcut
 
     Returns:
@@ -189,7 +188,7 @@ def cutnorm_quad(V: np.ndarray, C: np.ndarray) -> (np.float_, np.ndarray):
     Cutnorm function to compute objective function value and gradient
 
     Args:
-        V: ndarray, Low rank model X = V'*V;
+        V: ndarray, Low rank model X = V' * V;
         C: ndarray, Objective matrix to compute maxcut
 
     Returns:
