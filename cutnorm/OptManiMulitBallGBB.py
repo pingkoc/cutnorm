@@ -1,9 +1,18 @@
 import numpy as np
 
 
-def opt_mani_mulit_ball_gbb(x: np.ndarray, fun, *args, xtol=1e-6,
-                            ftol=1e-12, gtol=1e-6, rho=1e-4, eta=0.1,
-                            gamma=0.85, tau=1e-3, nt=5, mxitr=1000,
+def opt_mani_mulit_ball_gbb(x: np.ndarray,
+                            fun,
+                            *args,
+                            xtol=1e-6,
+                            ftol=1e-12,
+                            gtol=1e-6,
+                            rho=1e-4,
+                            eta=0.1,
+                            gamma=0.85,
+                            tau=1e-3,
+                            nt=5,
+                            mxitr=1000,
                             record=0):
     """
     Line search algorithm for optimization on manifold
@@ -61,8 +70,9 @@ def opt_mani_mulit_ball_gbb(x: np.ndarray, fun, *args, xtol=1e-6,
         print(
             '{:4} \t {:10} \t {:10} \t  {:10} \t {:5} \t {:9} \t {:7}'.format(
                 'Iter', 'tau', 'f(X)', 'nrmG', 'Exit', 'funcCount', 'ls-Iter'))
-        print('{:4} \t {:10} \t {:10} \t  {:10} \t {:5} \t {:9} \t {:7}'.
-              format(0, 0, f, 0, 0, 0))
+        print(
+            '{:4} \t {:10} \t {:10} \t  {:10} \t {:5} \t {:9} \t {:7}'.format(
+                0, 0, f, 0, 0, 0))
     if record == 10:
         out['fvec'] = f
 
@@ -106,14 +116,14 @@ def opt_mani_mulit_ball_gbb(x: np.ndarray, fun, *args, xtol=1e-6,
 
         if record >= 1:
             print(('{:4d} \t {:3.2e} \t {:7.6e} \t {:3.2e} \t {:3.2e}'
-                   '\t {:3.2e} \t {:2d}\n').format(itr, tau, f, nrmG,
-                                                   XDiff, FDiff, nls))
+                   '\t {:3.2e} \t {:2d}\n').format(itr, tau, f, nrmG, XDiff,
+                                                   FDiff, nls))
 
         crit[itr, :] = [nrmG, XDiff, FDiff]
-        mcrit = np.mean(crit[itr - min(nt, itr):itr+1, :], axis=0)
+        mcrit = np.mean(crit[itr - min(nt, itr):itr + 1, :], axis=0)
 
-        if ((XDiff < xtol and FDiff < ftol) or nrmG < gtol or
-                np.all(mcrit[1:] < 10 * np.array([xtol, ftol]))):
+        if ((XDiff < xtol and FDiff < ftol) or nrmG < gtol
+                or np.all(mcrit[1:] < 10 * np.array([xtol, ftol]))):
             out['msg'] = 'converge'
             break
 
@@ -170,7 +180,7 @@ def maxcut_quad(V: np.ndarray, C: np.ndarray) -> (np.float_, np.ndarray):
     """
     # Only taking first arg
     g = 2 * (V @ C[0])
-    f = np.sum(g*V) / 2
+    f = np.sum(g * V) / 2
     return f, g
 
 
@@ -192,5 +202,5 @@ def cutnorm_quad(V: np.ndarray, C: np.ndarray) -> (np.float_, np.ndarray):
     Us = V[:, :n]
 
     g = 2 * np.c_[Vs @ C[0], Us @ C[0]]
-    f = (np.sum(g[:, :n] * Us) + np.sum(g[:, n:] * Vs))/2
+    f = (np.sum(g[:, :n] * Us) + np.sum(g[:, n:] * Vs)) / 2
     return f, g
