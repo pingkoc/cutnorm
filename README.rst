@@ -7,6 +7,10 @@ Approximation via Gaussian Rounding and Optimization with Orthogonality Constrai
 
 This package computes the approximations to the cutnorm using some of the techniques detailed by Alon and Noar [ALON2004]_ and a fast optimization algorithm by Wen and Yin [WEN2013]_.
 
+Read the documentation_.
+
+.. _documentation: https://pingkoc.github.io/cutnorm/cutnorm.html
+
 Example Usage
 -------------
 
