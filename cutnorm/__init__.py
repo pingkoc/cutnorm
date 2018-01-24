@@ -1,1 +1,1 @@
-from .cutnorm import cutnorm
+from .compute import compute_cutnorm
