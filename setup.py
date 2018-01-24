@@ -8,7 +8,7 @@ def readme():
 
 setup(
     name='cutnorm',
-    version='0.1.3',
+    version='0.1.5',
     description=
     'Cutnorm approximation via Gaussian Rounding and Optimization with Orthogonality Constraints',
     long_description=readme(),
@@ -26,7 +26,7 @@ setup(
     author='Ping-Ko Chiu',
     author_email='pchiu5@illinois.edu',
     license='MIT',
-    packages=['cutnorm'],
+    packages=['cutnorm', 'cutnorm.tools'],
     install_requires=['numpy'],
     python_requires='>=3',
     include_package_data=True,
