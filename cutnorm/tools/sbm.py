@@ -152,7 +152,7 @@ def make_symmetric_triu(mat):
     Makes the matrix symmetric upper triangular
 
     Args:
-        mat, 2d array, shape (n,n)
+        mat: 2d array, shape (n,n)
     Returns:
         upper triangular symmetric matrix of the input
         2d array, shape (n,n)
