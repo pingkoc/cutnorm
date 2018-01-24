@@ -4,14 +4,13 @@ import numpy as np
 from .OptManiMulitBallGBB import opt_mani_mulit_ball_gbb, cutnorm_quad
 
 
-def cutnorm(
-        A: np.ndarray,
-        B: np.ndarray,
-        w1=None,
-        w2=None,
-        max_round_iter=100,
-        logn_lowrank=False,
-        debug=False) -> (np.float_, np.float_, np.ndarray, np.ndarray, dict):
+def cutnorm(A: np.ndarray,
+            B: np.ndarray,
+            w1=None,
+            w2=None,
+            max_round_iter=100,
+            logn_lowrank=False,
+            extra_info=False) -> (np.float_, np.float_, dict):
     """
     Computes the cutnorm of the differences between the two matrices
 
@@ -22,27 +21,27 @@ def cutnorm(
         w2: ndarray, (m, 1) array of weights for B
         max_round_iter: int, number of iterations for gaussian rounding
         logn_lowrank: boolean to toggle log2(n) low rank approximation
-        debug: boolean, generate debug information
+        extra_info: boolean, generate extra computational information
     Returns:
-        (objf_lower, objf_upper, S, T, debug_info)
-        objf_lower: objective function value from gaussian rounding
-        objf_upper: objective function value from sdp solution
+        (cutnorm_lower, cutnorm_upper, info)
+        cutnorm_lower: objective function value from gaussian rounding
+        cutnorm_upper: objective function value from sdp solution
         S: Cutnorm set axis = 0
         T: Cutnorm set axis = 1
-        debug_info: dictionary containing debug information
-            Debug information from OptManiMulitBallGBB:
+        info: dictionary containing computational information
+            Computational information from OptManiMulitBallGBB:
                 sdp_augm_n: dimension of augmented matrix
                 sdp_relax_rank_p: rank
                 sdp_tsolve: computation time
                 sdp_itr, sdp_nfe, sdp_feasi, sdp_nrmG: information from OptManiMulitBallGBB
-            Debug information from gaussian rounding:
+            Computational information from gaussian rounding:
                 round_tsolve: computation time for rounding
                 round_approx_list: list of rounded objf values
                 round_uis_list: list of uis
                 round_vjs_list: list of vjs
                 round_uis_opt: optimum uis
                 round_vjs_opt: optimum vjs
-            Debug information from processing the difference:
+            Computational information from processing the difference:
                 weight_of_C: weight vector of C, the difference matrix
     Raises:
         ValueError: if A and B are of wrong dimension, or if weight vectors
@@ -70,21 +69,22 @@ def cutnorm(
         else:
             w, C = _compute_C_uneqdim_unweighted(A, B)
 
-    objf_lower, objf_upper, S, T, debug_info = _compute_cutnorm(
-        C, max_round_iter, logn_lowrank, debug)
+    cutnorm_lower, cutnorm_upper, info = _compute_cutnorm(
+        C, max_round_iter, logn_lowrank, extra_info)
 
-    # Add weight vector into debug info
-    debug_info['weight_of_C'] = w
+    # Add weight vector into extra_info info
+    info['weight_of_C'] = w
 
-    return objf_lower, objf_upper, S, T, debug_info
+    return cutnorm_lower, cutnorm_upper, info
 
 
-def cutnorm_round(U: np.ndarray,
-                  V: np.ndarray,
-                  C: np.ndarray,
-                  max_round_iter: int,
-                  logn_lowrank=False,
-                  debug=False) -> (np.float_, np.ndarray, np.ndarray, dict):
+def cutnorm_round(
+        U: np.ndarray,
+        V: np.ndarray,
+        C: np.ndarray,
+        max_round_iter: int,
+        logn_lowrank=False,
+        extra_info=False) -> (np.float_, np.ndarray, np.ndarray, dict):
     '''
     Gaussian Rounding for Cutnorm
 
@@ -101,13 +101,13 @@ def cutnorm_round(U: np.ndarray,
         C: ndarray, original (n, n) shaped matrix to compute cutnorm
         max_round_iter: maximum number of rounding operations
         logn_lowrank: boolean to toggle log2(n) low rank approximation
-        debug: boolean, generate debug information
+        extra_info: boolean, generate extra computational information
     Returns:
-        (approx_opt, uis_opt, vjs_opt, round_debug_info)
+        (approx_opt, uis_opt, vjs_opt, round_info)
         approx_opt: approximated objective function value
         uis_opt: rounded u vector
         vis_opt: rounded v vector
-        round_debug_info: debug information for rounding
+        round_info: information for rounding operation
     '''
     (p, n) = U.shape
     approx_opt = 0
@@ -115,9 +115,9 @@ def cutnorm_round(U: np.ndarray,
     vjs_opt = np.zeros(n)
     G = np.random.randn(max_round_iter, p)
 
-    # Debug information
-    round_debug_info = {}
-    if debug:
+    # Computational information
+    round_info = {}
+    if extra_info:
         approx_list = np.zeros(max_round_iter)
         uis_list = np.zeros((max_round_iter, n))
         vjs_list = np.zeros((max_round_iter, n))
@@ -148,7 +148,7 @@ def cutnorm_round(U: np.ndarray,
             uis_opt = uis
             vjs_opt = vjs
 
-        if debug:
+        if extra_info:
             approx_list[i] = approx / 4.
             uis_list[i] = uis
             vjs_list[i] = vjs
@@ -156,8 +156,8 @@ def cutnorm_round(U: np.ndarray,
     # Cutnorm is 1/4 of infinity norm
     approx_opt = approx_opt / 4.
 
-    if debug:
-        round_debug_info = {
+    if extra_info:
+        round_info = {
             "round_approx_list": approx_list,
             "round_uis_list": uis_list,
             "round_vjs_list": vjs_list,
@@ -165,7 +165,7 @@ def cutnorm_round(U: np.ndarray,
             "round_vjs_opt": vjs_opt
         }
 
-    return approx_opt, uis_opt, vjs_opt, round_debug_info
+    return approx_opt, uis_opt, vjs_opt, round_info
 
 
 def cutnorm_sets(uis: np.ndarray, vjs: np.ndarray) -> (np.ndarray, np.ndarray):
@@ -192,8 +192,7 @@ def cutnorm_sets(uis: np.ndarray, vjs: np.ndarray) -> (np.ndarray, np.ndarray):
 def _compute_cutnorm(C: np.ndarray,
                      max_round_iter: int,
                      logn_lowrank=False,
-                     debug=False
-                     ) -> (np.float_, np.float_, np.ndarray, np.ndarray, dict):
+                     extra_info=False) -> (np.float_, np.float_, dict):
     """
     Computes the cutnorm of square matrix C
 
@@ -201,20 +200,20 @@ def _compute_cutnorm(C: np.ndarray,
         C: ndarray, (n, n) matrix
         max_round_iter: int, maximum rounding iterations
         logn_lowrank: boolean to toggle log2(n) low rank approximation
-        debug: boolean, debug information generation
+        extra_info: boolean, extra computational information generation
     Returns:
-        (objf_lower, objf_upper, S, T, debug_info)
-        objf_lower: objective function value from gaussian rounding
-        objf_upper: objective function value from sdp solution
+        (cutnorm_lower, cutnorm_upper, info)
+        cutnorm_lower: objective function value from gaussian rounding
+        cutnorm_upper: objective function value from sdp solution
         S: Cutnorm set axis = 0
         T: Cutnorm set axis = 1
-        debug_info: dictionary containing debug information
-            Debug information from OptManiMulitBallGBB:
+        info: dictionary containing computational information
+            Computational information from OptManiMulitBallGBB:
                 sdp_augm_n: dimension of augmented matrix
                 sdp_relax_rank_p: rank
                 sdp_tsolve: computation time
                 sdp_itr, sdp_nfe, sdp_feasi, sdp_nrmG: information from OptManiMulitBallGBB
-            Debug information from gaussian rounding:
+            Computational information from gaussian rounding:
                round_tsolve: computation time for rounding
                round_approx_list: list of rounded objf values
                round_uis_list: list of uis
@@ -259,34 +258,36 @@ def _compute_cutnorm(C: np.ndarray,
     # SDP upper bound approximation
     U = x[:, :n2 // 2]
     V = x[:, n2 // 2:]
-    objf_upper = np.abs(np.sum(C * (U.T @ V))) / 4.0
+    cutnorm_upper = np.abs(np.sum(C * (U.T @ V))) / 4.0
 
     # Gaussian Rounding
     tic_round = time.time()
-    (objf_lower, uis, vjs, round_debug_info) = cutnorm_round(
-        U, V, C, max_round_iter, logn_lowrank, debug)
+    (cutnorm_lower, uis, vjs, round_info) = cutnorm_round(
+        U, V, C, max_round_iter, logn_lowrank, extra_info)
     toc_round = time.time()
     tsolve_round = toc_round - tic_round
 
     # Generate cutnorm sets
     (S, T) = cutnorm_sets(uis, vjs)
 
-    debug_info = {}
-    if debug:
-        debug_info = {
+    info = {
+        "cutnorm_sets": (S, T),
+        "sdp_tsolve": tsolve_sdp,
+        "round_tsolve": tsolve_round
+    }
+    if extra_info:
+        info.update({
             "sdp_augm_n": n2,
             "sdp_relax_rank_p": p,
-            "sdp_tsolve": tsolve_sdp,
             "sdp_itr": out['itr'],
             "sdp_nfe": out['nfe'],
             "sdp_feasi": out['feasi'],
-            "sdp_nrmG": out['nrmG'],
-            "round_tsolve": tsolve_round
-        }
-        # Join rounding debug info
-        debug_info.update(round_debug_info)
+            "sdp_nrmG": out['nrmG']
+        })
+        # Join rounding info
+        info.update(round_info)
 
-    return objf_lower, objf_upper, S, T, debug_info
+    return cutnorm_lower, cutnorm_upper, info
 
 
 def _compute_C_weighted(A: np.ndarray, B: np.ndarray, w1: np.ndarray,
