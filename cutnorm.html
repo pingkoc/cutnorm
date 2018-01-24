@@ -1,0 +1,345 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>cutnorm package &#8212; Cutnorm 0.1.3 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cutnorm.tools package" href="cutnorm.tools.html" />
+    <link rel="prev" title="cutnorm" href="modules.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="cutnorm-package">
+<h1>cutnorm package<a class="headerlink" href="#cutnorm-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cutnorm.tools.html">cutnorm.tools package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cutnorm.tools.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cutnorm.tools.html#module-cutnorm.tools.sbm">cutnorm.tools.sbm module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cutnorm.tools.html#module-cutnorm.tools">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-cutnorm.OptManiMulitBallGBB">
+<span id="cutnorm-optmanimulitballgbb-module"></span><h2>cutnorm.OptManiMulitBallGBB module<a class="headerlink" href="#module-cutnorm.OptManiMulitBallGBB" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="cutnorm.OptManiMulitBallGBB.cutnorm_quad">
+<code class="descclassname">cutnorm.OptManiMulitBallGBB.</code><code class="descname">cutnorm_quad</code><span class="sig-paren">(</span><em>V: numpy.ndarray</em>, <em>C: numpy.ndarray) -&gt; (&lt;class 'numpy.float64'&gt;</em>, <em>&lt;class 'numpy.ndarray'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.OptManiMulitBallGBB.cutnorm_quad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cutnorm function to compute objective function value and gradient</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>V</strong> – ndarray, Low rank model X = V’ * V;</li>
+<li><strong>C</strong> – ndarray, Objective matrix to compute maxcut</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>(f, g)</p>
+<p>f: float, objective funciton value</p>
+<p>g: ndarray, gradient</p>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cutnorm.OptManiMulitBallGBB.maxcut_quad">
+<code class="descclassname">cutnorm.OptManiMulitBallGBB.</code><code class="descname">maxcut_quad</code><span class="sig-paren">(</span><em>V: numpy.ndarray</em>, <em>C: numpy.ndarray) -&gt; (&lt;class 'numpy.float64'&gt;</em>, <em>&lt;class 'numpy.ndarray'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.OptManiMulitBallGBB.maxcut_quad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maxcut function to compute objective function value and gradient</p>
+<p>maxcut SDP:
+X is n by n matrix
+max Tr(C*X), s.t., X_ii = 1, X psd</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>V</strong> – ndarray, Low rank model X = V’ * V;</li>
+<li><strong>C</strong> – ndarray, Objective matrix to compute maxcut</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>(f, g)</p>
+<p>f: float, objective funciton value</p>
+<p>g: ndarray, gradient</p>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cutnorm.OptManiMulitBallGBB.opt_mani_mulit_ball_gbb">
+<code class="descclassname">cutnorm.OptManiMulitBallGBB.</code><code class="descname">opt_mani_mulit_ball_gbb</code><span class="sig-paren">(</span><em>x: numpy.ndarray</em>, <em>fun</em>, <em>*args</em>, <em>xtol=1e-06</em>, <em>ftol=1e-12</em>, <em>gtol=1e-06</em>, <em>rho=0.0001</em>, <em>eta=0.1</em>, <em>gamma=0.85</em>, <em>tau=0.001</em>, <em>nt=5</em>, <em>mxitr=1000</em>, <em>record=0</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.OptManiMulitBallGBB.opt_mani_mulit_ball_gbb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Line search algorithm for optimization on manifold
+Reinterpreted directly from Zaiwen Wen and Wotao Yin’s
+Matlab implementation of their paper on
+‘A feasible method for optimizationwith orthogonality constraints’</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> – Numpy array where each column lies on the unit
+sphere ||x_i||_2 = 1</li>
+<li><strong>fun</strong> – Function that returns the objective function value
+and its gradient.
+Params: [x, args]
+Returns: [f, g]</li>
+<li><strong>args</strong> – args to be used in fun</li>
+<li><strong>kwargs</strong> – Options
+record = 0, no print out
+mxitr       max number of iterations
+xtol        stop control for ||X_k - X_{k-1}||
+gtol        stop control for the projected gradient
+ftol        stop control for abs(F_k - F_{k-1})/(1+|F_{k-1}|) usually, max{xtol, gtol} &gt; ftol</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>(x, g, out)</p>
+<p>x: solution</p>
+<p>g: gradient of x</p>
+<p>Out: output information</p>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-cutnorm.compute">
+<span id="cutnorm-compute-module"></span><h2>cutnorm.compute module<a class="headerlink" href="#module-cutnorm.compute" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="cutnorm.compute.compute_cutnorm">
+<code class="descclassname">cutnorm.compute.</code><code class="descname">compute_cutnorm</code><span class="sig-paren">(</span><em>A: numpy.ndarray</em>, <em>B: numpy.ndarray</em>, <em>w1=None</em>, <em>w2=None</em>, <em>max_round_iter=100</em>, <em>logn_lowrank=False</em>, <em>extra_info=False) -&gt; (&lt;class 'numpy.float64'&gt;</em>, <em>&lt;class 'numpy.float64'&gt;</em>, <em>&lt;class 'dict'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.compute.compute_cutnorm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the cutnorm of the differences between the two matrices</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>A</strong> – ndarray, (n, n) matrix</li>
+<li><strong>B</strong> – ndarray, (m, m) matrix</li>
+<li><strong>w1</strong> – ndarray, (n, 1) array of weights for A</li>
+<li><strong>w2</strong> – ndarray, (m, 1) array of weights for B</li>
+<li><strong>max_round_iter</strong> – int, number of iterations for gaussian rounding</li>
+<li><strong>logn_lowrank</strong> – boolean to toggle log2(n) low rank approximation</li>
+<li><strong>extra_info</strong> – boolean, generate extra computational information</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>(cutnorm_round, cutnorm_sdp, info)</p>
+<p>cutnorm_round: objective function value from gaussian rounding</p>
+<p>cutnorm_sdp: objective function value from sdp solution</p>
+<p>S: Cutnorm set axis = 0</p>
+<p>T: Cutnorm set axis = 1</p>
+<dl class="docutils">
+<dt>info: dictionary containing computational information</dt>
+<dd><dl class="first last docutils">
+<dt>Computational information from OptManiMulitBallGBB:</dt>
+<dd><p class="first last">sdp_augm_n: dimension of augmented matrix
+sdp_relax_rank_p: rank
+sdp_tsolve: computation time
+sdp_itr, sdp_nfe, sdp_feasi, sdp_nrmG: information from OptManiMulitBallGBB</p>
+</dd>
+<dt>Computational information from gaussian rounding:</dt>
+<dd><p class="first last">round_tsolve: computation time for rounding
+round_approx_list: list of rounded objf values
+round_uis_list: list of uis
+round_vjs_list: list of vjs
+round_uis_opt: optimum uis
+round_vjs_opt: optimum vjs</p>
+</dd>
+<dt>Computational information from processing the difference:</dt>
+<dd><p class="first last">weight_of_C: weight vector of C, the difference matrix</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – if A and B are of wrong dimension, or if weight vectors
+does not match the corresponding A and B matrices</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cutnorm.compute.cutnorm_sets">
+<code class="descclassname">cutnorm.compute.</code><code class="descname">cutnorm_sets</code><span class="sig-paren">(</span><em>uis: numpy.ndarray</em>, <em>vjs: numpy.ndarray) -&gt; (&lt;class 'numpy.ndarray'&gt;</em>, <em>&lt;class 'numpy.ndarray'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.compute.cutnorm_sets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the cutnorm sets from the rounded SDP solutions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>uis</strong> – ndarray, (n+1, ) shaped array of rounded +- 1 solution</li>
+<li><strong>vis</strong> – ndarray, (n+1, ) shaped array of rounded +- 1 solution</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>(S, T) Reconstructed S and T sets that are {1, 0}^n</p>
+<p>S: Cutnorm set axis = 0</p>
+<p>T: Cutnorm set axis = 1</p>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cutnorm.compute.gaussian_round">
+<code class="descclassname">cutnorm.compute.</code><code class="descname">gaussian_round</code><span class="sig-paren">(</span><em>U: numpy.ndarray</em>, <em>V: numpy.ndarray</em>, <em>C: numpy.ndarray</em>, <em>max_round_iter: int</em>, <em>logn_lowrank=False</em>, <em>extra_info=False) -&gt; (&lt;class 'numpy.float64'&gt;</em>, <em>&lt;class 'numpy.ndarray'&gt;</em>, <em>&lt;class 'numpy.ndarray'&gt;</em>, <em>&lt;class 'dict'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.compute.gaussian_round" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gaussian Rounding for Cutnorm</p>
+<p>The algorithm picks a random standard multivariate gaussian vector
+w in R^p and computes the rounded solution based on sgn(w dot ui).</p>
+<p>Adopted from David Koslicki’s cutnorm rounding code
+<a class="reference external" href="https://github.com/dkoslicki/CutNorm">https://github.com/dkoslicki/CutNorm</a>
+and Peter Diao’s modifications</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>U</strong> – ndarray, (p, n) shaped matrices of relaxed solutions</li>
+<li><strong>V</strong> – ndarray, (p, n) shaped matrices of relaxed solutions</li>
+<li><strong>C</strong> – ndarray, original (n, n) shaped matrix to compute cutnorm</li>
+<li><strong>max_round_iter</strong> – maximum number of rounding operations</li>
+<li><strong>logn_lowrank</strong> – boolean to toggle log2(n) low rank approximation</li>
+<li><strong>extra_info</strong> – boolean, generate extra computational information</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>(approx_opt, uis_opt, vjs_opt, round_info)</p>
+<p>approx_opt: approximated objective function value</p>
+<p>uis_opt: rounded u vector</p>
+<p>vis_opt: rounded v vector</p>
+<p>round_info: information for rounding operation</p>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-cutnorm">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cutnorm" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Cutnorm</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">cutnorm</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">cutnorm package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">cutnorm</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">cutnorm</a></li>
+      <li>Next: <a href="cutnorm.tools.html" title="next chapter">cutnorm.tools package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ping-Ko Chiu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/cutnorm.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,7 +1,0 @@
-# Compiled files
-__pycache__/
-*.py[cod]
-
-# Package Files
-*.egg-info/
-dist/

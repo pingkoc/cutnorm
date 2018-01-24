@@ -1,0 +1,157 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Introduction &#8212; Cutnorm 0.1.3 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cutnorm" href="modules.html" />
+    <link rel="prev" title="Cutnorm Documentation" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="cutnorm">
+<h2>Cutnorm<a class="headerlink" href="#cutnorm" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="approximation-via-gaussian-rounding-and-optimization-with-orthogonality-constraints">
+<h3>Approximation via Gaussian Rounding and Optimization with Orthogonality Constraints<a class="headerlink" href="#approximation-via-gaussian-rounding-and-optimization-with-orthogonality-constraints" title="Permalink to this headline">¶</a></h3>
+<p>This package computes the approximations to the cutnorm using some of the techniques detailed by Alon and Noar <a class="reference internal" href="#alon2004" id="id1">[ALON2004]</a> and a fast optimization algorithm by Wen and Yin <a class="reference internal" href="#wen2013" id="id2">[WEN2013]</a>.</p>
+</div>
+<div class="section" id="example-usage">
+<h3>Example Usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<p>Below is an example of using the cutnorm package and tools. Given two graphs A and B, we wish to compute a norm for the difference matrix (A - B) between the two graphs. An obvious example to represent the advantage of using a cutnorm over l1 norm is to consider A and B as <a class="reference external" href="https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93R%C3%A9nyi_model">Erdos-Renyi random graphs</a>. Under a fixed vertex set, an Erdos-Renyi random graph is one where a fixed probability determines the presence of an edge.</p>
+<p>Given two Erdos-Renyi random graphs with fix n and p=0.5, the l1 norm of the difference (after normalization) has an expectation of 0.5. However, we know that these two graphs should not have any correlation between each other. A reasonable norm of the difference should have an expectation of 0. In fact, the cutnorm of the difference approaches 0 as n grows.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">cutnorm</span> <span class="k">import</span> <span class="n">cutnorm</span><span class="p">,</span> <span class="n">tools</span>
+
+<span class="c1"># Generate Erdos Renyi Random Graph</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">erdos_renyi_a</span> <span class="o">=</span> <span class="n">tools</span><span class="o">.</span><span class="n">sbm</span><span class="o">.</span><span class="n">erdos_renyi</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+<span class="n">erdos_renyi_b</span> <span class="o">=</span> <span class="n">tools</span><span class="o">.</span><span class="n">sbm</span><span class="o">.</span><span class="n">erdos_renyi</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+
+<span class="c1"># Compute l1 norm</span>
+<span class="n">normalized_diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">erdos_renyi_a</span> <span class="o">-</span> <span class="n">erdos_renyi_b</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">l1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">normalized_diff</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Compute cutnorm</span>
+<span class="n">cutn_round</span><span class="p">,</span> <span class="n">cutn_sdp</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">cutnorm</span><span class="p">(</span><span class="n">erdos_renyi_a</span><span class="p">,</span> <span class="n">erdos_renyi_b</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;l1 norm: &quot;</span><span class="p">,</span> <span class="n">l1</span><span class="p">)</span>                 <span class="c1"># prints l1 norm value near ~0.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cutnorm rounded: &quot;</span><span class="p">,</span> <span class="n">cutn_round</span><span class="p">)</span> <span class="c1"># prints cutnorm rounded solution near ~0</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cutnorm sdp: &quot;</span><span class="p">,</span> <span class="n">cutn_sdp</span><span class="p">)</span>       <span class="c1"># prints cutnorm sdp solution near ~0</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<table class="docutils citation" frame="void" id="alon2004" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[ALON2004]</a></td><td>Noga Alon and Assaf Naor. 2004. Approximating the cut-norm via Grothendieck’s inequality. In Proceedings of the thirty-sixth annual ACM symposium on Theory of computing (STOC ‘04). ACM, New York, NY, USA, 72-80. DOI: <a class="reference external" href="http://dx.doi.org/10.1145/1007352.1007371">http://dx.doi.org/10.1145/1007352.1007371</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="wen2013" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[WEN2013]</a></td><td>Zaiwen Wen and Wotao Yin. 2013. A feasible method for optimization with orthogonality constraints. Math. Program. 142, 1-2 (December 2013), 397-434. DOI: <a class="reference external" href="https://doi.org/10.1007/s10107-012-0584-1">https://doi.org/10.1007/s10107-012-0584-1</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Cutnorm</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cutnorm">Cutnorm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">cutnorm</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Cutnorm Documentation</a></li>
+      <li>Next: <a href="modules.html" title="next chapter">cutnorm</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ping-Ko Chiu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/intro.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

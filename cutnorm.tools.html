@@ -1,0 +1,257 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>cutnorm.tools package &#8212; Cutnorm 0.1.3 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="cutnorm package" href="cutnorm.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="cutnorm-tools-package">
+<h1>cutnorm.tools package<a class="headerlink" href="#cutnorm-tools-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-cutnorm.tools.sbm">
+<span id="cutnorm-tools-sbm-module"></span><h2>cutnorm.tools.sbm module<a class="headerlink" href="#module-cutnorm.tools.sbm" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="cutnorm.tools.sbm.erdos_renyi">
+<code class="descclassname">cutnorm.tools.sbm.</code><code class="descname">erdos_renyi</code><span class="sig-paren">(</span><em>n</em>, <em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.tools.sbm.erdos_renyi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates Erdos Renyi random graph size n with
+probability p</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>n</strong> – int, size of the output matrix</li>
+<li><strong>p</strong> – float, edge probability</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Erdos Renyi random graph matrix
+2d array, shape (n,n)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cutnorm.tools.sbm.make_symmetric_triu">
+<code class="descclassname">cutnorm.tools.sbm.</code><code class="descname">make_symmetric_triu</code><span class="sig-paren">(</span><em>mat</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.tools.sbm.make_symmetric_triu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes the matrix symmetric upper triangular</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mat</strong> – 2d array, shape (n,n)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">upper triangular symmetric matrix of the input
+2d array, shape (n,n)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cutnorm.tools.sbm.sbm">
+<code class="descclassname">cutnorm.tools.sbm.</code><code class="descname">sbm</code><span class="sig-paren">(</span><em>community_sizes</em>, <em>prob_mat</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.tools.sbm.sbm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a stochastic block matrix</p>
+<p>Community_sizes indicate the size of each community and the
+probability matrix indicate the probability that a 1 will be
+generated for each element within the community.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>community_sizes</strong> – 1d array, shape (n) sizes of community</li>
+<li><strong>prob_mat</strong> – 2d array, shape (n,n) probability of edges for each community</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">stochastic block matrix, 2d array, shape depending on community sizes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cutnorm.tools.sbm.sbm_autoregressive">
+<code class="descclassname">cutnorm.tools.sbm.</code><code class="descname">sbm_autoregressive</code><span class="sig-paren">(</span><em>community_sizes</em>, <em>prob_list</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.tools.sbm.sbm_autoregressive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates an autoregressive SBM</p>
+<p>An autoregressive SBM has edge probability according to the prob_list
+on the diagonal but (prob_list[i] * prob_list[j])**(abs(i - j))
+for the off-diagonal blocks entries.</p>
+<p>This idea is similar to the autoregressive models</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>community_sizes</strong> – 1d array, shape (n) sizes of community</li>
+<li><strong>prob_list</strong> – 1d array, shape (n), where n is the number of diagonal blocks</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An autoregressive SBM, 2d array, shape depending on community sizes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cutnorm.tools.sbm.sbm_autoregressive_prob">
+<code class="descclassname">cutnorm.tools.sbm.</code><code class="descname">sbm_autoregressive_prob</code><span class="sig-paren">(</span><em>community_sizes</em>, <em>prob_list</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.tools.sbm.sbm_autoregressive_prob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the underlying probability matrix thatgives
+rise to the autoregressive SBM</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>community_sizes</strong> – 1d array, shape (n) sizes of community</li>
+<li><strong>prob_list</strong> – 1d array, shape (n), where n is the number of diagonal blocks</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A probability matrix for an autoregressive SBM,
+2d array, shape depending on community sizes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cutnorm.tools.sbm.sbm_prob">
+<code class="descclassname">cutnorm.tools.sbm.</code><code class="descname">sbm_prob</code><span class="sig-paren">(</span><em>community_sizes</em>, <em>prob_mat</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.tools.sbm.sbm_prob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a matrix indicating the underlying probability
+that gives rise to a stochastic block matrix</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>community_sizes</strong> – 1d array, shape (n) sizes of community</li>
+<li><strong>prob_mat</strong> – 2d array, shape (n,n) probability of edges for each community</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">probabilities of a stochastic block matrix,
+2d array, shape depending on community sizes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-cutnorm.tools">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cutnorm.tools" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Cutnorm</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">cutnorm</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cutnorm.html">cutnorm package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">cutnorm</a><ul>
+  <li><a href="cutnorm.html">cutnorm package</a><ul>
+      <li>Previous: <a href="cutnorm.html" title="previous chapter">cutnorm package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ping-Ko Chiu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/cutnorm.tools.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
