@@ -4,6 +4,37 @@
 
 This package computes the approximations to the cutnorm using some of the techniques detailed by Alon and Noar [ALON2004]_ and a fast optimization algorithm by Wen and Yin [WEN2013]_.
 
+Example Usage:
+--------------
+
+Below is an example of using the cutnorm package and tools. Given two graphs A and B, we wish to compute a norm for the difference matrix (A - B) between the two graphs. An obvious example to represent the advantage of using a cutnorm over l1 norm is to consider A and B as `Erdos-Renyi random graphs`_. Under a fixed vertex set, an Erdos-Renyi random graph is one where a fixed probability determines the presence of an edge.
+
+.. _`Erdos-Renyi random graphs`: https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93R%C3%A9nyi_model
+
+Given two Erdos-Renyi random graphs with fix n and p=0.5, the l1 norm of the difference (after normalization) has an expectation of 0.5. However, we know that these two graphs should not have any correlation between each other. A reasonable norm of the difference should have an expectation of 0. In fact, the cutnorm of the difference approaches 0 as n grows.
+
+.. code:: python
+
+    import numpy as np
+    from cutnorm import cutnorm, tools
+
+    # Generate Erdos Renyi Random Graph
+    n = 100
+    p = 0.5
+    erdos_renyi_a = tools.sbm.erdos_renyi(n, p)
+    erdos_renyi_b = tools.sbm.erdos_renyi(n, p)
+
+    # Compute l1 norm
+    normalized_diff = (erdos_renyi_a - erdos_renyi_b) / n**2
+    l1 = np.linalg.norm(normalized_diff.flatten(), ord=1)
+
+    # Compute cutnorm
+    cutn_round, cutn_sdp, info = cutnorm(erdos_renyi_a, erdos_renyi_b)
+
+    print("l1 norm: ", l1)                 # prints l1 norm value near ~0.5
+    print("cutnorm rounded: ", cutn_round) # prints cutnorm rounded solution near ~0
+    print("cutnorm sdp: ", cutn_sdp)       # prints cutnorm sdp solution near ~0
+
 ----
 
 .. [ALON2004] Noga Alon and Assaf Naor. 2004. Approximating the cut-norm via Grothendieck's inequality. In Proceedings of the thirty-sixth annual ACM symposium on Theory of computing (STOC '04). ACM, New York, NY, USA, 72-80. DOI: http://dx.doi.org/10.1145/1007352.1007371
