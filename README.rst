@@ -32,25 +32,26 @@ Given two Erdos-Renyi random graphs with fix n and p=0.5, the edit distance (l1 
 
 .. code:: python
 
-    import numpy as np
-    from cutnorm import cutnorm, tools
+  import numpy as np
+  from cutnorm import compute_cutnorm, tools
 
-    # Generate Erdos Renyi Random Graph
-    n = 100
-    p = 0.5
-    erdos_renyi_a = tools.sbm.erdos_renyi(n, p)
-    erdos_renyi_b = tools.sbm.erdos_renyi(n, p)
+  # Generate Erdos Renyi Random Graph
+  n = 100
+  p = 0.5
+  erdos_renyi_a = tools.sbm.erdos_renyi(n, p)
+  erdos_renyi_b = tools.sbm.erdos_renyi(n, p)
 
-    # Compute l1 norm
-    normalized_diff = (erdos_renyi_a - erdos_renyi_b) / n**2
-    l1 = np.linalg.norm(normalized_diff.flatten(), ord=1)
+  # Compute l1 norm
+  normalized_diff = (erdos_renyi_a - erdos_renyi_b) / n**2
+  l1 = np.linalg.norm(normalized_diff.flatten(), ord=1)
 
-    # Compute cutnorm
-    cutn_round, cutn_sdp, info = cutnorm(erdos_renyi_a, erdos_renyi_b)
+  # Compute cutnorm
+  cutn_round, cutn_sdp, info = compute_cutnorm(erdos_renyi_a, erdos_renyi_b)
 
-    print("l1 norm: ", l1)                 # prints l1 norm value near ~0.5
-    print("cutnorm rounded: ", cutn_round) # prints cutnorm rounded solution near ~0
-    print("cutnorm sdp: ", cutn_sdp)       # prints cutnorm sdp solution near ~0
+  print("l1 norm: ", l1)  # prints l1 norm value near ~0.5
+  print("cutnorm rounded: ",
+        cutn_round)  # prints cutnorm rounded solution near ~0
+  print("cutnorm sdp: ", cutn_sdp)  # prints cutnorm sdp solution near ~0
 
 ----
 
