@@ -50,10 +50,18 @@
 <p>This package computes the approximations to the cutnorm using some of the techniques detailed by Alon and Noar <a class="reference internal" href="#alon2004" id="id1">[ALON2004]</a> and a fast optimization algorithm by Wen and Yin <a class="reference internal" href="#wen2013" id="id2">[WEN2013]</a>.</p>
 <p>Read the <a class="reference external" href="https://pingkoc.github.io/cutnorm/cutnorm.html">documentation</a>.</p>
 </div>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<p>Use <a class="reference external" href="http://www.pip-installer.org/en/latest/">pip</a> to install the package.
+Install from terminal as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ pip install cutnorm
+</pre></div>
+</div>
+</div>
 <div class="section" id="example-usage">
 <h3>Example Usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
 <p>Below is an example of using the cutnorm package and tools. Given two graphs A and B, we wish to compute a norm for the difference matrix (A - B) between the two graphs. An obvious example to represent the advantage of using a cutnorm over l1 norm is to consider A and B as <a class="reference external" href="https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93R%C3%A9nyi_model">Erdos-Renyi random graphs</a>. Under a fixed vertex set, an Erdos-Renyi random graph is one where a fixed probability determines the presence of an edge.</p>
-<p>Given two Erdos-Renyi random graphs with fix n and p=0.5, the l1 norm of the difference (after normalization) has an expectation of 0.5. However, we know that these two graphs should not have any correlation between each other. A reasonable norm of the difference should have an expectation of 0. In fact, the cutnorm of the difference approaches 0 as n grows.</p>
+<p>Given two Erdos-Renyi random graphs with fix n and p=0.5, the edit distance (l1 norm) of the difference (after normalization) is 1/2 with large probability. However, these two graphs have the same global structure. The edit distance fails as a notion of ‘distance’ between the two graphs in the perspective of global structural similarity as discussed by Lovasz <a class="reference internal" href="#lovasz2009" id="id3">[LOVASZ2009]</a>. The cutnorm is a measure of distance that reflects global structural similarity. In fact, the cutnorm of the difference for this example approaches 0 as n grows.</p>
 <div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">cutnorm</span> <span class="k">import</span> <span class="n">cutnorm</span><span class="p">,</span> <span class="n">tools</span>
 
@@ -86,6 +94,12 @@
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id2">[WEN2013]</a></td><td>Zaiwen Wen and Wotao Yin. 2013. A feasible method for optimization with orthogonality constraints. Math. Program. 142, 1-2 (December 2013), 397-434. DOI: <a class="reference external" href="https://doi.org/10.1007/s10107-012-0584-1">https://doi.org/10.1007/s10107-012-0584-1</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="lovasz2009" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[LOVASZ2009]</a></td><td>Lovasz, L. 2009. Very large graphs. ArXiv:0902.0132 [Math]. Retrieved from http://arxiv.org/abs/0902.0132</td></tr>
 </tbody>
 </table>
 </div>
