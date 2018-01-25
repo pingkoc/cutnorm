@@ -11,6 +11,16 @@ Read the documentation_.
 
 .. _documentation: https://pingkoc.github.io/cutnorm/cutnorm.html
 
+Installation
+------------
+
+Use pip_ to install the package.
+Install from terminal as follows::
+
+  $ pip install cutnorm
+
+.. _pip: http://www.pip-installer.org/en/latest/
+
 Example Usage
 -------------
 
@@ -18,7 +28,7 @@ Below is an example of using the cutnorm package and tools. Given two graphs A a
 
 .. _`Erdos-Renyi random graphs`: https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93R%C3%A9nyi_model
 
-Given two Erdos-Renyi random graphs with fix n and p=0.5, the l1 norm of the difference (after normalization) has an expectation of 0.5. However, we know that these two graphs should not have any correlation between each other. A reasonable norm of the difference should have an expectation of 0. In fact, the cutnorm of the difference approaches 0 as n grows.
+Given two Erdos-Renyi random graphs with fix n and p=0.5, the edit distance (l1 norm) of the difference (after normalization) is 1/2 with large probability. However, these two graphs have the same global structure. The edit distance fails as a notion of 'distance' between the two graphs in the perspective of global structural similarity as discussed by Lovasz [LOVASZ2009]_. The cutnorm is a measure of distance that reflects global structural similarity. In fact, the cutnorm of the difference for this example approaches 0 as n grows.
 
 .. code:: python
 
@@ -46,3 +56,4 @@ Given two Erdos-Renyi random graphs with fix n and p=0.5, the l1 norm of the dif
 
 .. [ALON2004] Noga Alon and Assaf Naor. 2004. Approximating the cut-norm via Grothendieck's inequality. In Proceedings of the thirty-sixth annual ACM symposium on Theory of computing (STOC '04). ACM, New York, NY, USA, 72-80. DOI: http://dx.doi.org/10.1145/1007352.1007371
 .. [WEN2013] Zaiwen Wen and Wotao Yin. 2013. A feasible method for optimization with orthogonality constraints. Math. Program. 142, 1-2 (December 2013), 397-434. DOI: https://doi.org/10.1007/s10107-012-0584-1
+.. [LOVASZ2009] Lovasz, L. 2009. Very large graphs. ArXiv:0902.0132 [Math]. Retrieved from http://arxiv.org/abs/0902.0132
