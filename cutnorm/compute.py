@@ -29,10 +29,6 @@ def compute_cutnorm(A: np.ndarray,
 
         cutnorm_sdp: objective function value from sdp solution
 
-        S: Cutnorm set axis = 0
-
-        T: Cutnorm set axis = 1
-
         info: dictionary containing computational information
             Computational information from OptManiMulitBallGBB:
                 sdp_augm_n: dimension of augmented matrix
@@ -46,8 +42,12 @@ def compute_cutnorm(A: np.ndarray,
                 round_vjs_list: list of vjs
                 round_uis_opt: optimum uis
                 round_vjs_opt: optimum vjs
+
             Computational information from processing the difference:
                 weight_of_C: weight vector of C, the difference matrix
+
+            Cutnorm information:
+               cutnorm_sets (S,T): vectors of cutnorm
     Raises:
         ValueError: if A and B are of wrong dimension, or if weight vectors
             does not match the corresponding A and B matrices
@@ -217,10 +217,6 @@ def _compute_cutnorm(C: np.ndarray,
 
         cutnorm_sdp: objective function value from sdp solution
 
-        S: Cutnorm set axis = 0
-
-        T: Cutnorm set axis = 1
-
         info: dictionary containing computational information
             Computational information from OptManiMulitBallGBB:
                 sdp_augm_n: dimension of augmented matrix
@@ -234,6 +230,9 @@ def _compute_cutnorm(C: np.ndarray,
                round_vjs_list: list of vjs
                round_uis_opt: optimum uis
                round_vjs_opt: optimum vjs
+
+            Cutnorm information:
+               cutnorm_sets (S,T): vectors of cutnorm
     """
     n1 = len(C)
     C_col_sum = np.sum(C, axis=0)
