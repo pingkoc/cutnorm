@@ -142,12 +142,12 @@ def gaussian_round(
 
         # Rounding
         if logn_lowrank:
-            C_U_low_filtered = C_U[:, :low_rank] * uis[:, np.newaxis]
-            C_V_low_filtered = C_V[:low_rank] * vjs
-            C_S = np.diag(C_s[:low_rank])
-            C_low_filtered = np.dot(C_U_low_filtered,
-                                    np.dot(C_S, C_V_low_filtered))
-            approx = np.abs(np.sum(C_low_filtered))
+            C_U_low_filtered_sum = np.sum(
+                C_U[:, :low_rank] * uis[:, np.newaxis], axis=0)
+            C_V_low_filtered_sum = np.sum(
+                np.dot(np.diag(C_s[:low_rank]), C_V[:low_rank] * vjs), axis=1)
+            approx = np.abs(
+                np.sum(C_U_low_filtered_sum * C_V_low_filtered_sum))
         else:
             approx = np.abs(np.sum(C * np.outer(uis, vjs)))
 
