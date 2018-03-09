@@ -8,7 +8,7 @@ def readme():
 
 setup(
     name='cutnorm',
-    version='0.1.5',
+    version='0.1.6',
     description=
     'Cutnorm approximation via Gaussian Rounding and Optimization with Orthogonality Constraints',
     long_description=readme(),
