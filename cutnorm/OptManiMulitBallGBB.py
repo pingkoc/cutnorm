@@ -1,3 +1,11 @@
+"""
+We do not claim any rights to this file.
+
+The algorithm belongs to Zaiwen Wen and Wotao Yin who authored 'A feasible method for optimizationwith orthogonality constraints'.
+
+We have simply reinterpreted the algorithm from Matlab to Python.
+"""
+
 import numpy as np
 
 
