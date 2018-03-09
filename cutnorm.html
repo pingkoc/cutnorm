@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>cutnorm package &#8212; Cutnorm 0.1.5 documentation</title>
+    <title>cutnorm package &#8212; Cutnorm 0.1.6 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.5',
+        VERSION:     '0.1.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -61,6 +61,9 @@
 </div>
 <div class="section" id="module-cutnorm.OptManiMulitBallGBB">
 <span id="cutnorm-optmanimulitballgbb-module"></span><h2>cutnorm.OptManiMulitBallGBB module<a class="headerlink" href="#module-cutnorm.OptManiMulitBallGBB" title="Permalink to this headline">¶</a></h2>
+<p>We do not claim any rights to this file.</p>
+<p>The algorithm belongs to Zaiwen Wen and Wotao Yin who authored ‘A feasible method for optimizationwith orthogonality constraints’.</p>
+<p>We have simply reinterpreted the algorithm from Matlab to Python.</p>
 <dl class="function">
 <dt id="cutnorm.OptManiMulitBallGBB.cutnorm_quad">
 <code class="descclassname">cutnorm.OptManiMulitBallGBB.</code><code class="descname">cutnorm_quad</code><span class="sig-paren">(</span><em>V: numpy.ndarray</em>, <em>C: numpy.ndarray) -&gt; (&lt;class 'numpy.float64'&gt;</em>, <em>&lt;class 'numpy.ndarray'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.OptManiMulitBallGBB.cutnorm_quad" title="Permalink to this definition">¶</a></dt>
@@ -176,8 +179,6 @@ ftol        stop control for abs(F_k - F_{k-1})/(1+|F_{k-1}|) usually, max{xtol,
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>(cutnorm_round, cutnorm_sdp, info)</p>
 <p>cutnorm_round: objective function value from gaussian rounding</p>
 <p>cutnorm_sdp: objective function value from sdp solution</p>
-<p>S: Cutnorm set axis = 0</p>
-<p>T: Cutnorm set axis = 1</p>
 <dl class="docutils">
 <dt>info: dictionary containing computational information</dt>
 <dd><dl class="first last docutils">
@@ -197,6 +198,9 @@ round_vjs_opt: optimum vjs</p>
 </dd>
 <dt>Computational information from processing the difference:</dt>
 <dd><p class="first last">weight_of_C: weight vector of C, the difference matrix</p>
+</dd>
+<dt>Cutnorm information:</dt>
+<dd><p class="first last">cutnorm_sets (S,T): vectors of cutnorm</p>
 </dd>
 </dl>
 </dd>
