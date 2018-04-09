@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>cutnorm package &#8212; Cutnorm 0.1.6 documentation</title>
+    <title>cutnorm package &#8212; Cutnorm 0.1.7 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.6',
+        VERSION:     '0.1.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -61,105 +61,12 @@
 </div>
 <div class="section" id="module-cutnorm.OptManiMulitBallGBB">
 <span id="cutnorm-optmanimulitballgbb-module"></span><h2>cutnorm.OptManiMulitBallGBB module<a class="headerlink" href="#module-cutnorm.OptManiMulitBallGBB" title="Permalink to this headline">¶</a></h2>
-<p>We do not claim any rights to this file.</p>
-<p>The algorithm belongs to Zaiwen Wen and Wotao Yin who authored ‘A feasible method for optimizationwith orthogonality constraints’.</p>
-<p>We have simply reinterpreted the algorithm from Matlab to Python.</p>
-<dl class="function">
-<dt id="cutnorm.OptManiMulitBallGBB.cutnorm_quad">
-<code class="descclassname">cutnorm.OptManiMulitBallGBB.</code><code class="descname">cutnorm_quad</code><span class="sig-paren">(</span><em>V: numpy.ndarray</em>, <em>C: numpy.ndarray) -&gt; (&lt;class 'numpy.float64'&gt;</em>, <em>&lt;class 'numpy.ndarray'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.OptManiMulitBallGBB.cutnorm_quad" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cutnorm function to compute objective function value and gradient</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>V</strong> – ndarray, Low rank model X = V’ * V;</li>
-<li><strong>C</strong> – ndarray, Objective matrix to compute maxcut</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>(f, g)</p>
-<p>f: float, objective funciton value</p>
-<p>g: ndarray, gradient</p>
-</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="cutnorm.OptManiMulitBallGBB.maxcut_quad">
-<code class="descclassname">cutnorm.OptManiMulitBallGBB.</code><code class="descname">maxcut_quad</code><span class="sig-paren">(</span><em>V: numpy.ndarray</em>, <em>C: numpy.ndarray) -&gt; (&lt;class 'numpy.float64'&gt;</em>, <em>&lt;class 'numpy.ndarray'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.OptManiMulitBallGBB.maxcut_quad" title="Permalink to this definition">¶</a></dt>
-<dd><p>Maxcut function to compute objective function value and gradient</p>
-<p>maxcut SDP:
-X is n by n matrix
-max Tr(C*X), s.t., X_ii = 1, X psd</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>V</strong> – ndarray, Low rank model X = V’ * V;</li>
-<li><strong>C</strong> – ndarray, Objective matrix to compute maxcut</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>(f, g)</p>
-<p>f: float, objective funciton value</p>
-<p>g: ndarray, gradient</p>
-</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="cutnorm.OptManiMulitBallGBB.opt_mani_mulit_ball_gbb">
-<code class="descclassname">cutnorm.OptManiMulitBallGBB.</code><code class="descname">opt_mani_mulit_ball_gbb</code><span class="sig-paren">(</span><em>x: numpy.ndarray</em>, <em>fun</em>, <em>*args</em>, <em>xtol=1e-06</em>, <em>ftol=1e-12</em>, <em>gtol=1e-06</em>, <em>rho=0.0001</em>, <em>eta=0.1</em>, <em>gamma=0.85</em>, <em>tau=0.001</em>, <em>nt=5</em>, <em>mxitr=1000</em>, <em>record=0</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.OptManiMulitBallGBB.opt_mani_mulit_ball_gbb" title="Permalink to this definition">¶</a></dt>
-<dd><p>Line search algorithm for optimization on manifold
-Reinterpreted directly from Zaiwen Wen and Wotao Yin’s
-Matlab implementation of their paper on
-‘A feasible method for optimizationwith orthogonality constraints’</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x</strong> – Numpy array where each column lies on the unit
-sphere ||x_i||_2 = 1</li>
-<li><strong>fun</strong> – Function that returns the objective function value
-and its gradient.
-Params: [x, args]
-Returns: [f, g]</li>
-<li><strong>args</strong> – args to be used in fun</li>
-<li><strong>kwargs</strong> – Options
-record = 0, no print out
-mxitr       max number of iterations
-xtol        stop control for ||X_k - X_{k-1}||
-gtol        stop control for the projected gradient
-ftol        stop control for abs(F_k - F_{k-1})/(1+|F_{k-1}|) usually, max{xtol, gtol} &gt; ftol</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>(x, g, out)</p>
-<p>x: solution</p>
-<p>g: gradient of x</p>
-<p>Out: output information</p>
-</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </div>
 <div class="section" id="module-cutnorm.compute">
 <span id="cutnorm-compute-module"></span><h2>cutnorm.compute module<a class="headerlink" href="#module-cutnorm.compute" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="cutnorm.compute.compute_cutnorm">
-<code class="descclassname">cutnorm.compute.</code><code class="descname">compute_cutnorm</code><span class="sig-paren">(</span><em>A: numpy.ndarray</em>, <em>B: numpy.ndarray</em>, <em>w1=None</em>, <em>w2=None</em>, <em>max_round_iter=100</em>, <em>logn_lowrank=False</em>, <em>extra_info=False) -&gt; (&lt;class 'numpy.float64'&gt;</em>, <em>&lt;class 'numpy.float64'&gt;</em>, <em>&lt;class 'dict'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.compute.compute_cutnorm" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">cutnorm.compute.</code><code class="descname">compute_cutnorm</code><span class="sig-paren">(</span><em>A</em>, <em>B</em>, <em>w1=None</em>, <em>w2=None</em>, <em>max_round_iter=100</em>, <em>logn_lowrank=False</em>, <em>extra_info=False</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.compute.compute_cutnorm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the cutnorm of the differences between the two matrices</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -218,7 +125,7 @@ does not match the corresponding A and B matrices</p>
 
 <dl class="function">
 <dt id="cutnorm.compute.cutnorm_sets">
-<code class="descclassname">cutnorm.compute.</code><code class="descname">cutnorm_sets</code><span class="sig-paren">(</span><em>uis: numpy.ndarray</em>, <em>vjs: numpy.ndarray) -&gt; (&lt;class 'numpy.ndarray'&gt;</em>, <em>&lt;class 'numpy.ndarray'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.compute.cutnorm_sets" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">cutnorm.compute.</code><code class="descname">cutnorm_sets</code><span class="sig-paren">(</span><em>uis</em>, <em>vjs</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.compute.cutnorm_sets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates the cutnorm sets from the rounded SDP solutions</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -242,7 +149,7 @@ does not match the corresponding A and B matrices</p>
 
 <dl class="function">
 <dt id="cutnorm.compute.gaussian_round">
-<code class="descclassname">cutnorm.compute.</code><code class="descname">gaussian_round</code><span class="sig-paren">(</span><em>U: numpy.ndarray</em>, <em>V: numpy.ndarray</em>, <em>C: numpy.ndarray</em>, <em>max_round_iter: int</em>, <em>logn_lowrank=False</em>, <em>extra_info=False) -&gt; (&lt;class 'numpy.float64'&gt;</em>, <em>&lt;class 'numpy.ndarray'&gt;</em>, <em>&lt;class 'numpy.ndarray'&gt;</em>, <em>&lt;class 'dict'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.compute.gaussian_round" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">cutnorm.compute.</code><code class="descname">gaussian_round</code><span class="sig-paren">(</span><em>U</em>, <em>V</em>, <em>C</em>, <em>max_round_iter</em>, <em>logn_lowrank=False</em>, <em>extra_info=False</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.compute.gaussian_round" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gaussian Rounding for Cutnorm</p>
 <p>The algorithm picks a random standard multivariate gaussian vector
 w in R^p and computes the rounded solution based on sgn(w dot ui).</p>
