@@ -4,13 +4,13 @@ import numpy as np
 from .OptManiMulitBallGBB import opt_mani_mulit_ball_gbb, cutnorm_quad
 
 
-def compute_cutnorm(A: np.ndarray,
-                    B: np.ndarray,
+def compute_cutnorm(A,
+                    B,
                     w1=None,
                     w2=None,
                     max_round_iter=100,
                     logn_lowrank=False,
-                    extra_info=False) -> (np.float_, np.float_, dict):
+                    extra_info=False):
     """
     Computes the cutnorm of the differences between the two matrices
 
@@ -83,13 +83,12 @@ def compute_cutnorm(A: np.ndarray,
     return cutnorm_round, cutnorm_sdp, info
 
 
-def gaussian_round(
-        U: np.ndarray,
-        V: np.ndarray,
-        C: np.ndarray,
-        max_round_iter: int,
-        logn_lowrank=False,
-        extra_info=False) -> (np.float_, np.ndarray, np.ndarray, dict):
+def gaussian_round(U,
+                   V,
+                   C,
+                   max_round_iter,
+                   logn_lowrank=False,
+                   extra_info=False):
     '''
     Gaussian Rounding for Cutnorm
 
@@ -137,8 +136,8 @@ def gaussian_round(
         low_rank = int(np.log2(n))
 
     for i in range(max_round_iter):
-        uis = np.sign(G[i] @ U)
-        vjs = np.sign(G[i] @ V)
+        uis = np.sign(np.matmul(G[i], U))
+        vjs = np.sign(np.matmul(G[i], V))
 
         # Rounding
         if logn_lowrank:
@@ -176,7 +175,7 @@ def gaussian_round(
     return approx_opt, uis_opt, vjs_opt, round_info
 
 
-def cutnorm_sets(uis: np.ndarray, vjs: np.ndarray) -> (np.ndarray, np.ndarray):
+def cutnorm_sets(uis, vjs):
     """
     Generates the cutnorm sets from the rounded SDP solutions
 
@@ -198,10 +197,7 @@ def cutnorm_sets(uis: np.ndarray, vjs: np.ndarray) -> (np.ndarray, np.ndarray):
     return S, T
 
 
-def _compute_cutnorm(C: np.ndarray,
-                     max_round_iter: int,
-                     logn_lowrank=False,
-                     extra_info=False) -> (np.float_, np.float_, dict):
+def _compute_cutnorm(C, max_round_iter, logn_lowrank=False, extra_info=False):
     """
     Computes the cutnorm of square matrix C
 
@@ -271,7 +267,7 @@ def _compute_cutnorm(C: np.ndarray,
     # SDP upper bound approximation
     U = x[:, :n2 // 2]
     V = x[:, n2 // 2:]
-    cutnorm_sdp = np.abs(np.sum(C * (U.T @ V))) / 4.0
+    cutnorm_sdp = np.abs(np.sum(C * np.matmul(U.T, V))) / 4.0
 
     # Gaussian Rounding
     tic_round = time.time()
@@ -303,8 +299,7 @@ def _compute_cutnorm(C: np.ndarray,
     return cutnorm_round, cutnorm_sdp, info
 
 
-def _compute_C_weighted(A: np.ndarray, B: np.ndarray, w1: np.ndarray,
-                        w2: np.ndarray) -> (np.ndarray, np.ndarray):
+def _compute_C_weighted(A, B, w1, w2):
     """
     Generates the difference matrix of the two weighted matricies
 
@@ -342,8 +337,7 @@ def _compute_C_weighted(A: np.ndarray, B: np.ndarray, w1: np.ndarray,
     return w, C
 
 
-def _compute_C_eqdim_unweighted(A: np.ndarray,
-                                B: np.ndarray) -> (np.ndarray, np.ndarray):
+def _compute_C_eqdim_unweighted(A, B):
     """
     Generates the difference matrix of the two equal dimension unweighted matrices
 
@@ -360,8 +354,7 @@ def _compute_C_eqdim_unweighted(A: np.ndarray,
     return w, C
 
 
-def _compute_C_uneqdim_unweighted(A: np.ndarray,
-                                  B: np.ndarray) -> (np.ndarray, np.ndarray):
+def _compute_C_uneqdim_unweighted(A, B):
     """
     Generates the difference matrix of the two equal dimension unweighted matrices
 

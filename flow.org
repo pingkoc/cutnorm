@@ -1,0 +1,12 @@
+* Updating new version
+- Setup.py, docs/source/conf.py
+* Development Branch
+- Work on develop branch before merging to master
+- Clone a repo for master and merge the branch then push
+* Generating new docs
+- Goto docs and "make html" this will generate html in the cutnorm_package_docs directory
+- "make latexpdf" will generate manual in the package main directory
+- Go to cutnorm_package_docs/html and git add . and git commit and push to gh-pages
+* Updating PyPi
+- Make sure new versions are setup
+- python setup.py sdist upload

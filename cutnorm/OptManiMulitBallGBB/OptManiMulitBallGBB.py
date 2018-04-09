@@ -9,9 +9,9 @@ We have simply reinterpreted the algorithm from Matlab to Python.
 import numpy as np
 
 
-def opt_mani_mulit_ball_gbb(x: np.ndarray,
+def opt_mani_mulit_ball_gbb(x,
                             fun,
-                            *args,
+                            args,
                             xtol=1e-6,
                             ftol=1e-12,
                             gtol=1e-6,
@@ -171,7 +171,7 @@ def opt_mani_mulit_ball_gbb(x: np.ndarray,
     return x, g, out
 
 
-def maxcut_quad(V: np.ndarray, C: np.ndarray) -> (np.float_, np.ndarray):
+def maxcut_quad(V, C):
     """
     Maxcut function to compute objective function value and gradient
 
@@ -191,12 +191,12 @@ def maxcut_quad(V: np.ndarray, C: np.ndarray) -> (np.float_, np.ndarray):
         g: ndarray, gradient
     """
     # Only taking first arg
-    g = 2 * (V @ C[0])
+    g = 2 * np.matmul(V, C)
     f = np.sum(g * V) / 2
     return f, g
 
 
-def cutnorm_quad(V: np.ndarray, C: np.ndarray) -> (np.float_, np.ndarray):
+def cutnorm_quad(V, C):
     """
     Cutnorm function to compute objective function value and gradient
 
@@ -211,10 +211,10 @@ def cutnorm_quad(V: np.ndarray, C: np.ndarray) -> (np.float_, np.ndarray):
 
         g: ndarray, gradient
     """
-    n = len(C[0])
+    n = len(C)
     Vs = V[:, n:]
     Us = V[:, :n]
 
-    g = 2 * np.c_[Vs @ C[0], Us @ C[0]]
+    g = 2 * np.c_[np.matmul(Vs, C), np.matmul(Us, C)]
     f = (np.sum(g[:, :n] * Us) + np.sum(g[:, n:] * Vs)) / 2
     return f, g
