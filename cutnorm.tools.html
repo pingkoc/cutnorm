@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>cutnorm.tools package &#8212; Cutnorm 0.1.8 documentation</title>
+    <title>cutnorm.tools package &#8212; Cutnorm 0.1.9 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.8',
+        VERSION:     '0.1.9',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -176,6 +176,193 @@ that gives rise to a stochastic block matrix</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">probabilities of a stochastic block matrix,
 2d array, shape depending on community sizes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-cutnorm.tools.distort">
+<span id="cutnorm-tools-distort-module"></span><h2>cutnorm.tools.distort module<a class="headerlink" href="#module-cutnorm.tools.distort" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="cutnorm.tools.distort.add_gaussian_noise">
+<code class="descclassname">cutnorm.tools.distort.</code><code class="descname">add_gaussian_noise</code><span class="sig-paren">(</span><em>mat</em>, <em>mean</em>, <em>std</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.tools.distort.add_gaussian_noise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds gaussian noise to the matrix</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mat</strong> – 2d array, shape (n,n)</li>
+<li><strong>mean</strong> – gaussian mean</li>
+<li><strong>std</strong> – gaussian std</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Processed matrix</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cutnorm.tools.distort.shift">
+<code class="descclassname">cutnorm.tools.distort.</code><code class="descname">shift</code><span class="sig-paren">(</span><em>mat</em>, <em>n_shift</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.tools.distort.shift" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shifts the matrix by rolling it along the diagonal</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mat</strong> – 2d array, shape (n,n)</li>
+<li><strong>n_shift</strong> – number to roll</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Shifted matrix</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-cutnorm.tools.dbf_testing">
+<span id="cutnorm-tools-dbf-testing-module"></span><h2>cutnorm.tools.dbf_testing module<a class="headerlink" href="#module-cutnorm.tools.dbf_testing" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of DBF statistic</p>
+<p>from “Distance-based analysis of variance: approximate inference and an application to genome-wide association studies”, Christopher Minas and Giovanni Montana</p>
+<dl class="function">
+<dt id="cutnorm.tools.dbf_testing.dbf_pvalue">
+<code class="descclassname">cutnorm.tools.dbf_testing.</code><code class="descname">dbf_pvalue</code><span class="sig-paren">(</span><em>mc</em>, <em>vc</em>, <em>gc</em>, <em>fstat</em>, <em>trW</em>, <em>trB</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.tools.dbf_testing.dbf_pvalue" title="Permalink to this definition">¶</a></dt>
+<dd><p>pval = pearson_three(mc, vc, gc, fstat)
+compute one sided p value from standardized pearson three distribution</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mc</strong> – mean</li>
+<li><strong>vc</strong> – variance</li>
+<li><strong>gc</strong> – skewness</li>
+<li><strong>fstat</strong> – DBF distance based F statistic, between vs. within group variability</li>
+<li><strong>trW</strong> – within group variability for DBF statistic</li>
+<li><strong>trB</strong> – between group varaibility for DBF statistic</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">pval = one sided p value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cutnorm.tools.dbf_testing.dbf_test">
+<code class="descclassname">cutnorm.tools.dbf_testing.</code><code class="descname">dbf_test</code><span class="sig-paren">(</span><em>dmatrix</em>, <em>labels</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.tools.dbf_testing.dbf_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>pval, fstat, Bvar, Wvar = dbf_test(dmatrix, labels)
+run dbf test</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dmatrix</strong> – N by N array of distances</li>
+<li><strong>Labels</strong> – N array group membership</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">one sided p value
+fstat: DBF distance based F statistic, between vs. within group variability
+Bvar: between vs overall group variability
+Wvar: within vs overall group variability</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pval</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cutnorm.tools.dbf_testing.distance_variability">
+<code class="descclassname">cutnorm.tools.dbf_testing.</code><code class="descname">distance_variability</code><span class="sig-paren">(</span><em>dmatrix</em>, <em>Ic</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.tools.dbf_testing.distance_variability" title="Permalink to this definition">¶</a></dt>
+<dd><p>fstat, trW, trB = distance_variability(dmatrix, Ic)</p>
+<p>compute
+(i) within group variability,
+(ii) between group variability
+(iii) total variability
+(iv) distance based F statistic (DBF)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dmatrix</strong> – N by N array of distances</li>
+<li><strong>Ic</strong> – N  by G array group membership</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">DBF distance based F statistic, between vs. within group variability
+trW: Within group variability
+trB: Between group variability</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">fstat</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cutnorm.tools.dbf_testing.distribution_parameters">
+<code class="descclassname">cutnorm.tools.dbf_testing.</code><code class="descname">distribution_parameters</code><span class="sig-paren">(</span><em>dmatrix</em>, <em>Ic</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.tools.dbf_testing.distribution_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>mc, vc, gc  = distribution_parameters(dmatrix, Ic)
+compute (pearson III) null distribution parameters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dmatrix</strong> – N by N array of distances</li>
+<li><strong>Ic</strong> – N  by G array group membership</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">mean
+vc: variance
+gc: skewness</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mc</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cutnorm.tools.dbf_testing.inv_f_fn">
+<code class="descclassname">cutnorm.tools.dbf_testing.</code><code class="descname">inv_f_fn</code><span class="sig-paren">(</span><em>mc</em>, <em>vc</em>, <em>gc</em>, <em>fstat</em>, <em>trT</em><span class="sig-paren">)</span><a class="headerlink" href="#cutnorm.tools.dbf_testing.inv_f_fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>inverse fn</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mc</strong> – mean</li>
+<li><strong>vc</strong> – variance</li>
+<li><strong>gc</strong> – skewness</li>
+<li><strong>fstat</strong> – DBF distance based F statistic, between vs. within group variability</li>
+<li><strong>trT</strong> – total group varaibility for DBF statistic</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">inv fn val</p>
 </td>
 </tr>
 </tbody>
