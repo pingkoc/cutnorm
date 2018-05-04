@@ -1,36 +1,33 @@
-# coding: utf-8
+"""
+Implementation of DBF statistic
 
-# # Implementation of DBF statistic
-# from "Distance-based analysis of variance: approximate inference and an application to genome-wide association studies", Christopher Minas and Giovanni Montana
-
-# In[7]:
+from "Distance-based analysis of variance: approximate inference and an application to genome-wide association studies", Christopher Minas and Giovanni Montana
+"""
 
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer
 from scipy.stats import pearson3
 from scipy.stats import gamma
-from numba import jit, njit
 
 
-@jit
 def distance_variability(dmatrix, Ic):
     '''
     fstat, trW, trB = distance_variability(dmatrix, Ic)
-
-    Inputs:
-    dmatrix: N by N array of distances
-    Ic: N  by G array group membership
-
-    Outputs:
-    fstat: DBF distance based F statistic, between vs. within group variability
-    trW: Within group variability
-    trB: Between group variability
 
     compute
     (i) within group variability,
     (ii) between group variability
     (iii) total variability
     (iv) distance based F statistic (DBF)
+
+    Args:
+        dmatrix: N by N array of distances
+        Ic: N  by G array group membership
+
+    Returns:
+        fstat: DBF distance based F statistic, between vs. within group variability
+        trW: Within group variability
+        trB: Between group variability
     '''
     N = float(dmatrix.shape[0])  # total number of elements
     Ng = np.array(
@@ -57,20 +54,19 @@ def distance_variability(dmatrix, Ic):
     return fstat, trW, trB
 
 
-@jit
 def distribution_parameters(dmatrix, Ic):
     '''
     mc, vc, gc  = distribution_parameters(dmatrix, Ic)
     compute (pearson III) null distribution parameters
 
-    Inputs:
-    dmatrix: N by N array of distances
-    Ic: N  by G array group membership
+    Args:
+        dmatrix: N by N array of distances
+        Ic: N  by G array group membership
 
-    Outputs:
-    mc: mean
-    vc: variance
-    gc: skewness
+    Returns:
+        mc: mean
+        vc: variance
+        gc: skewness
     '''
 
     # Compute the test statistic
@@ -187,28 +183,39 @@ def distribution_parameters(dmatrix, Ic):
     return mc, answervc, answerskew
 
 
-@njit
 def inv_f_fn(mc, vc, gc, fstat, trT):
+    '''
+    inverse fn
+
+    Args:
+        mc: mean
+        vc: variance
+        gc: skewness
+        fstat: DBF distance based F statistic, between vs. within group variability
+        trT: total group varaibility for DBF statistic
+
+    Returns:
+        inv fn val
+    '''
     ans = ((trT - mc) * fstat - mc) / (((vc)**(0.5)) * (1 + fstat))
     return (ans)
 
 
-@jit
 def dbf_pvalue(mc, vc, gc, fstat, trW, trB):
     '''
     pval = pearson_three(mc, vc, gc, fstat)
     compute one sided p value from standardized pearson three distribution
 
-    Inputs:
-    mc: mean
-    vc: variance
-    gc: skewness
-    fstat: DBF distance based F statistic, between vs. within group variability
-    trW: within group variability for DBF statistic
-    trB: between group varaibility for DBF statistic
+    Args:
+        mc: mean
+        vc: variance
+        gc: skewness
+        fstat: DBF distance based F statistic, between vs. within group variability
+        trW: within group variability for DBF statistic
+        trB: between group varaibility for DBF statistic
 
-    Outputs:
-    pval = one sided p value
+    Returns:
+        pval = one sided p value
     '''
     trT = trW + trB  #compute total variability of data
 
@@ -275,21 +282,20 @@ def dbf_pvalue(mc, vc, gc, fstat, trW, trB):
     return (1 - ans)
 
 
-@jit
 def dbf_test(dmatrix, labels):
     '''
     pval, fstat, Bvar, Wvar = dbf_test(dmatrix, labels)
     run dbf test
 
-    Inputs:
-    dmatrix: N by N array of distances
-    Labels: N array group membership
+    Args:
+        dmatrix: N by N array of distances
+        Labels: N array group membership
 
-    Outputs:
-    pval: one sided p value
-    fstat: DBF distance based F statistic, between vs. within group variability
-    Bvar: between vs overall group variability
-    Wvar: within vs overall group variability
+    Returns:
+        pval: one sided p value
+        fstat: DBF distance based F statistic, between vs. within group variability
+        Bvar: between vs overall group variability
+        Wvar: within vs overall group variability
     '''
     G = len(np.unique(labels))
     N = len(labels)

@@ -1,3 +1,6 @@
+"""
+This package computes the Cutnorm.
+"""
 import time
 import math
 import numpy as np
@@ -12,11 +15,11 @@ def compute_cutnorm(A,
                     logn_lowrank=False,
                     extra_info=False):
     """
-    Computes the cutnorm of the differences between the two matrices
+    Computes the cutnorm of the differences between the two symmetric matrices
 
     Args:
-        A: ndarray, (n, n) matrix
-        B: ndarray, (m, m) matrix
+        A: ndarray, (n, n) symmetric matrix
+        B: ndarray, (m, m) symmetric matrix
         w1: ndarray, (n, 1) array of weights for A
         w2: ndarray, (m, 1) array of weights for B
         max_round_iter: int, number of iterations for gaussian rounding
@@ -53,6 +56,10 @@ def compute_cutnorm(A,
             does not match the corresponding A and B matrices
     """
     # Input checking
+    if type(A) is not np.ndarray:
+        A = np.array(A)
+    if type(B) is not np.ndarray:
+        B = np.array(B)
     if A.ndim != 2 or B.ndim != 2:
         raise ValueError("A and B must be 2D matrices")
     n, n2 = np.shape(A)
@@ -304,8 +311,8 @@ def _compute_C_weighted(A, B, w1, w2):
     Generates the difference matrix of the two weighted matricies
 
     Args:
-        A: ndarray, (n, n) matrix
-        B: ndarray, (m, m) matrix
+        A: ndarray, (n, n) symmetric matrix
+        B: ndarray, (m, m) symmetric matrix
         w1: ndarray, (n, 1) array of weights for A
         w2: ndarray, (m, 1) array of weights for B
     Returns:
@@ -342,8 +349,8 @@ def _compute_C_eqdim_unweighted(A, B):
     Generates the difference matrix of the two equal dimension unweighted matrices
 
     Args:
-        A: ndarray, (n, n) matrix
-        B: ndarray, (m, m) matrix
+        A: ndarray, (n, n) symmetric matrix
+        B: ndarray, (m, m) symmetric matrix
     Returns:
         C: ndarray, the difference matrix
     """
@@ -359,8 +366,8 @@ def _compute_C_uneqdim_unweighted(A, B):
     Generates the difference matrix of the two equal dimension unweighted matrices
 
     Args:
-        A: ndarray, (n, n) matrix
-        B: ndarray, (m, m) matrix
+        A: ndarray, (n, n) symmetric matrix
+        B: ndarray, (m, m) symmetric matrix
     Returns:
         C: ndarray, the difference matrix
     """

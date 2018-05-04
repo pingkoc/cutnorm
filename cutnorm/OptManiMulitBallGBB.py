@@ -1,7 +1,7 @@
 """
-The algorithm belongs to Zaiwen Wen and Wotao Yin who authored 'A feasible method for optimizationwith orthogonality constraints'.
+This package contains the algorithm in 'A feasible method for optimizationwith orthogonality constraints' by Zaiwen Wen and Wotao Yin.
 
-We have simply reinterpreted the algorithm from Matlab to Python.
+We have reinterpreted the algorithm from Matlab by Wen & Yin to Python.
 """
 
 import numpy as np
