@@ -40,8 +40,8 @@ Below is an example of using the cutnorm package and tools.
   # Generate Erdos Renyi Random Graph (Undirected/Symmetric)
   n = 100
   p = 0.5
-  erdos_renyi_a = tools.sbm.erdos_renyi(n, p)
-  erdos_renyi_b = tools.sbm.erdos_renyi(n, p)
+  erdos_renyi_a = tools.sbm.erdos_renyi(n, p, symmetric=True)
+  erdos_renyi_b = tools.sbm.erdos_renyi(n, p, symmetric=True)
 
   # Compute l1 norm
   normalized_diff = (erdos_renyi_a - erdos_renyi_b) / n**2
