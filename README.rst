@@ -5,7 +5,7 @@ Cutnorm
 Approximation via Gaussian Rounding and Optimization with Orthogonality Constraints
 -----------------------------------------------------------------------------------
 
-This package computes the approximations to the cutnorm using some of the techniques detailed by Alon and Noar [ALON2004]_ and a fast optimization algorithm by Wen and Yin [WEN2013]_.
+This package computes the approximations to the cutnorm for symmetric matrices (undirected graphs) using some of the techniques detailed by Alon and Noar [ALON2004]_ and a fast optimization algorithm by Wen and Yin [WEN2013]_.
 
 Read the documentation_.
 
@@ -24,18 +24,18 @@ Install from terminal as follows::
 Example Usage
 -------------
 
-Below is an example of using the cutnorm package and tools. Given two graphs A and B, we wish to compute a norm for the difference matrix (A - B) between the two graphs. An obvious example to represent the advantage of using a cutnorm over l1 norm is to consider A and B as `Erdos-Renyi random graphs`_. Under a fixed vertex set, an Erdos-Renyi random graph is one where a fixed probability determines the presence of an edge.
+Below is an example of using the cutnorm package and tools. Given two graphs A and B, we wish to compute a norm for the difference matrix (A - B) between the two graphs. An obvious example to represent the advantage of using a cutnorm over $l_1$ norm is to consider A and B as `Erdos-Renyi random graphs`_. Under a fixed vertex set, an Erdos-Renyi random graph is one where a fixed probability determines the presence of an edge.
 
 .. _`Erdos-Renyi random graphs`: https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93R%C3%A9nyi_model
 
-Given two Erdos-Renyi random graphs with fix n and p=0.5, the edit distance (l1 norm) of the difference (after normalization) is 1/2 with large probability. However, these two graphs have the same global structure. The edit distance fails as a notion of 'distance' between the two graphs in the perspective of global structural similarity as discussed by Lovasz [LOVASZ2009]_. The cutnorm is a measure of distance that reflects global structural similarity. In fact, the cutnorm of the difference for this example approaches 0 as n grows.
+Given two Erdos-Renyi random graphs with fix n and p=0.5, the edit distance ($l_1$ norm) of the difference (after normalization) is 1/2 with large probability. However, these two graphs have the same global structure. The edit distance fails as a notion of 'distance' between the two graphs in the perspective of global structural similarity as discussed by Lovasz [LOVASZ2009]_. The cutnorm is a measure of distance that reflects global structural similarity. In fact, the cutnorm of the difference for this example approaches 0 as n grows.
 
 .. code:: python
 
   import numpy as np
   from cutnorm import compute_cutnorm, tools
 
-  # Generate Erdos Renyi Random Graph
+  # Generate Erdos Renyi Random Graph (Undirected/Symmetric)
   n = 100
   p = 0.5
   erdos_renyi_a = tools.sbm.erdos_renyi(n, p)
