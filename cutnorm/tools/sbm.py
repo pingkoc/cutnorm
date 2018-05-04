@@ -1,7 +1,12 @@
+"""
+This package generates stochastic matrices.
+
+Currently supported models are general Stochastic Block Models, Erdos Renyi, and Autoregressive Models.
+"""
 import numpy as np
 
 
-def sbm(community_sizes, prob_mat):
+def sbm(community_sizes, prob_mat, symmetric=True):
     '''
     Generates a stochastic block matrix
 
@@ -12,6 +17,7 @@ def sbm(community_sizes, prob_mat):
     Args:
         community_sizes: 1d array, shape (n) sizes of community
         prob_mat: 2d array, shape (n,n) probability of edges for each community
+        symmetric: boolean, if true, the function will output a symmetric matrix
     Returns:
         stochastic block matrix, 2d array, shape depending on community sizes
     '''
@@ -41,6 +47,9 @@ def sbm(community_sizes, prob_mat):
             sbm[prev_sum_i:prev_sum_i + size_i, prev_sum_j:
                 prev_sum_j + size_j] = sample
 
+    # Discard lower triangular and reflect upper triangular
+    if symmetric:
+        sbm = make_symmetric_triu(sbm)
     return sbm
 
 
@@ -83,7 +92,7 @@ def sbm_prob(community_sizes, prob_mat):
     return sbm
 
 
-def sbm_autoregressive(community_sizes, prob_list):
+def sbm_autoregressive(community_sizes, prob_list, symmetric=True):
     '''
     Generates an autoregressive SBM
 
@@ -96,11 +105,12 @@ def sbm_autoregressive(community_sizes, prob_list):
     Args:
         community_sizes: 1d array, shape (n) sizes of community
         prob_list: 1d array, shape (n), where n is the number of diagonal blocks
+        symmetric: boolean, if true, the function will output a symmetric matrix
     Returns:
         An autoregressive SBM, 2d array, shape depending on community sizes
     '''
     prob_matrix = _sbm_autoregressive_gen_prob_matrix(prob_list)
-    return sbm(community_sizes, prob_matrix)
+    return sbm(community_sizes, prob_matrix, symmetric)
 
 
 def sbm_autoregressive_prob(community_sizes, prob_list):
@@ -162,7 +172,7 @@ def make_symmetric_triu(mat):
     return mat
 
 
-def erdos_renyi(n, p):
+def erdos_renyi(n, p, symmetric=True):
     '''
     Generates Erdos Renyi random graph size n with
     probability p
@@ -170,8 +180,9 @@ def erdos_renyi(n, p):
     Args:
         n: int, size of the output matrix
         p: float, edge probability
+        symmetric: boolean, if true, the function will output a symmetric matrix
     Returns:
         Erdos Renyi random graph matrix
         2d array, shape (n,n)
     '''
-    return sbm([n], [[p]])
+    return sbm([n], [[p]], symmetric)
