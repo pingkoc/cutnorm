@@ -28,7 +28,7 @@ Given the adjacency matrices of two simple graphs A and B, we wish to compute a 
 
 .. _`Erdos-Renyi random graphs`: https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93R%C3%A9nyi_model
 
-Given two Erdos-Renyi random graphs with constant n and p=0.5, the edit distance (l1 norm) of the difference (after normalization) is 0.5 with large probability. An l1 norm of 1 implies the two matrices are completely different, 0 implies identy, and 0.5 is somewhere in between. However, these two graphs have the same global structure. As n approaches infinity, A and B converges to the same graphon object that is 0.5 everywhere. The edit distance fails as a notion of 'distance' between the two graphs in the perspective of global structural similarity as discussed by Lovasz [LOVASZ2009]_. The cutnorm is a measure of distance that reflects global structural similarity. In fact, the cutnorm of the difference for this example approaches 0 as n grows.
+Given two Erdos-Renyi random graphs with constant n and p=0.5, the edit distance (l1 norm) of the difference (after normalization) is 0.5 with large probability. An l1 norm of 1 implies the two matrices are completely different, 0 implies identity, and 0.5 is somewhere in between. However, these two graphs have the same global structure. As n approaches infinity, A and B converges to the same graphon object that is 0.5 everywhere. The edit distance fails as a notion of 'distance' between the two graphs in the perspective of global structural similarity as discussed by Lovasz [LOVASZ2009]_. The cutnorm is a measure of distance that reflects global structural similarity. In fact, the cutnorm of the difference for this example approaches 0 as n grows.
 
 Below is an example of using the cutnorm package and tools. 
 
