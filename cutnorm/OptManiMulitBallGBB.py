@@ -213,6 +213,6 @@ def cutnorm_quad(V, C):
     Vs = V[:, n:]
     Us = V[:, :n]
 
-    g = 2 * np.c_[np.matmul(Vs, C), np.matmul(Us, C)]
+    g = 2 * np.c_[np.matmul(Vs, C.T), np.matmul(Us, C)]
     f = (np.sum(g[:, :n] * Us) + np.sum(g[:, n:] * Vs)) / 2
     return f, g
