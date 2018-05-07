@@ -35,5 +35,5 @@ def compute_lp_distance(p, A, B, w1=None, w2=None):
             w, C = _compute_C_uneqdim_unweighted(A, B)
 
     if p == np.inf:
-        return np.linalg.norm(C, ord=p)
-    return np.linalg.norm(C, ord=p) / (n**(2 / p))
+        return np.linalg.norm(C.flatten(), ord=p) * (n**2)
+    return np.linalg.norm(C.flatten(), ord=p) * (n**2) / (n**(2 / p))
