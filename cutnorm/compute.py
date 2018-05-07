@@ -15,11 +15,11 @@ def compute_cutnorm(A,
                     logn_lowrank=False,
                     extra_info=False):
     """
-    Computes the cutnorm of the differences between the two symmetric matrices
+    Computes the cutnorm of the differences between the two matrices
 
     Args:
-        A: ndarray, (n, n) symmetric matrix
-        B: ndarray, (m, m) symmetric matrix
+        A: ndarray, (n, n) matrix
+        B: ndarray, (m, m) matrix
         w1: ndarray, (n, 1) array of weights for A
         w2: ndarray, (m, 1) array of weights for B
         max_round_iter: int, number of iterations for gaussian rounding
@@ -37,7 +37,7 @@ def compute_cutnorm(A,
                 sdp_augm_n: dimension of augmented matrix
                 sdp_relax_rank_p: rank
                 sdp_tsolve: computation time
-                sdp_itr, sdp_nfe, sdp_feasi, sdp_nrmG: information from OptManiMulitBallGBB
+                sdp_itr, sdp_nfe, sdp_feasi, sdp_fval, sdp_g, sdp_nrmG: information from OptManiMulitBallGBB
             Computational information from gaussian rounding:
                 round_tsolve: computation time for rounding
                 round_approx_list: list of rounded objf values
@@ -225,7 +225,7 @@ def _compute_cutnorm(C, max_round_iter, logn_lowrank=False, extra_info=False):
                 sdp_augm_n: dimension of augmented matrix
                 sdp_relax_rank_p: rank
                 sdp_tsolve: computation time
-                sdp_itr, sdp_nfe, sdp_feasi, sdp_nrmG: information from OptManiMulitBallGBB
+                sdp_itr, sdp_nfe, sdp_feasi, sdp_fval, sdp_g, sdp_nrmG: information from OptManiMulitBallGBB
             Computational information from gaussian rounding:
                round_tsolve: computation time for rounding
                round_approx_list: list of rounded objf values
@@ -298,6 +298,8 @@ def _compute_cutnorm(C, max_round_iter, logn_lowrank=False, extra_info=False):
             "sdp_itr": out['itr'],
             "sdp_nfe": out['nfe'],
             "sdp_feasi": out['feasi'],
+            "sdp_fval": out['fval'],
+            "sdp_g": g,
             "sdp_nrmG": out['nrmG']
         })
         # Join rounding info
@@ -311,8 +313,8 @@ def _compute_C_weighted(A, B, w1, w2):
     Generates the difference matrix of the two weighted matricies
 
     Args:
-        A: ndarray, (n, n) symmetric matrix
-        B: ndarray, (m, m) symmetric matrix
+        A: ndarray, (n, n) matrix
+        B: ndarray, (m, m) matrix
         w1: ndarray, (n, 1) array of weights for A
         w2: ndarray, (m, 1) array of weights for B
     Returns:
@@ -349,8 +351,8 @@ def _compute_C_eqdim_unweighted(A, B):
     Generates the difference matrix of the two equal dimension unweighted matrices
 
     Args:
-        A: ndarray, (n, n) symmetric matrix
-        B: ndarray, (m, m) symmetric matrix
+        A: ndarray, (n, n) matrix
+        B: ndarray, (m, m) matrix
     Returns:
         C: ndarray, the difference matrix
     """
@@ -366,8 +368,8 @@ def _compute_C_uneqdim_unweighted(A, B):
     Generates the difference matrix of the two equal dimension unweighted matrices
 
     Args:
-        A: ndarray, (n, n) symmetric matrix
-        B: ndarray, (m, m) symmetric matrix
+        A: ndarray, (n, n) matrix
+        B: ndarray, (m, m) matrix
     Returns:
         C: ndarray, the difference matrix
     """
