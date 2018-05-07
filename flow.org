@@ -4,6 +4,7 @@
 - Work on develop branch before merging to master
 - Clone a repo for master and merge the branch then push
 * Generating new docs
+- If new files are added, check the .rst files for autogen. For an example if you add a new module in cutnorm.tools, add another section to cutnorm.tools.rst
 - Goto docs and "make html" this will generate html in the cutnorm_package_docs directory
 - "make latexpdf" will generate manual in the package main directory
 - Go to cutnorm_package_docs/html and git add . and git commit and push to gh-pages
