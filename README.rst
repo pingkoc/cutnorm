@@ -5,7 +5,7 @@ Cutnorm
 Approximation via Gaussian Rounding and Optimization with Orthogonality Constraints
 -----------------------------------------------------------------------------------
 
-This package computes the approximations to the cutnorm for symmetric matrices (undirected graphs) using some of the techniques detailed by Alon and Noar [ALON2004]_ and a fast optimization algorithm by Wen and Yin [WEN2013]_.
+This package computes the approximations to the cutnorm of matrices using some of the techniques detailed by Alon and Noar [ALON2004]_ and a fast optimization algorithm by Wen and Yin [WEN2013]_.
 
 Read the documentation_.
 
@@ -37,7 +37,7 @@ Below is an example of using the cutnorm package and tools.
   import numpy as np
   from cutnorm import compute_cutnorm, tools
 
-  # Generate Erdos Renyi Random Graph (Undirected/Symmetric)
+  # Generate Erdos Renyi Random Graph (Simple/Undirected)
   n = 100
   p = 0.5
   erdos_renyi_a = tools.sbm.erdos_renyi(n, p, symmetric=True)
