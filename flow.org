@@ -1,5 +1,6 @@
 * Updating new version
 - Setup.py, docs/source/conf.py
+- when everything for release is done, git tag -a **VERSION** -m "**COMMENT**"
 * Development Branch
 - Work on develop branch before merging to master
 - Clone a repo for master and merge the branch then push
