@@ -56,9 +56,9 @@ def compute_cutnorm(A,
             does not match the corresponding A and B matrices
     """
     # Input checking
-    if type(A) is not np.ndarray:
+    if not isinstance(A, np.ndarray):
         A = np.array(A)
-    if type(B) is not np.ndarray:
+    if not isinstance(B, np.ndarray):
         B = np.array(B)
     if A.ndim != 2 or B.ndim != 2:
         raise ValueError("A and B must be 2D matrices")
@@ -100,7 +100,7 @@ def gaussian_round(U,
     Gaussian Rounding for Cutnorm
 
     The algorithm picks a random standard multivariate gaussian vector
-    w in R^p and computes the rounded solution based on sgn(w \dot ui).
+    w in R^p and computes the rounded solution based on sgn(w \\dot ui).
 
     Adopted from David Koslicki's cutnorm rounding code
     https://github.com/dkoslicki/CutNorm
@@ -376,8 +376,8 @@ def _compute_C_uneqdim_unweighted(A, B):
     n, n2 = np.shape(A)
     m, m2 = np.shape(B)
     d = math.gcd(n, m)
-    k = n / d
-    l = m / d
+    k = n // d
+    l = m // d
     c = k + l - 1
     v1 = np.arange(k) / n
     v2 = np.arange(1, l + 1) / m
